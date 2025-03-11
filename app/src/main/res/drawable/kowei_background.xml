@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 选中状态（黄色填充） -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFC72C" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+    <!-- 默认状态（白色背景 + 黄色边框） -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <stroke android:width="2dp" android:color="#FFC72C" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
+</selector>

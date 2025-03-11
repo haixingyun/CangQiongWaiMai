@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>、
+    <color name="home_yellow">#FBC419</color>
+    <!-- Menu item background -->
+    <color name="menu_item_normal_background">#F3F4F7</color>
+    <color name="menu_item_selected_background">#FFFFFF</color>
+
+    <!-- Menu item text color -->
+    <color name="menu_item_text_color">#000000</color>
+    <color name="red">#FF0000</color>
+
+    <color name="common_window_background_color">#F4F4F4</color>
+    <color name="common_primary_color">#E0E0</color>
+    <color name="your_status_bar_color">#FFCC99</color>
+    <color name="your_navigation_bar_color">#33FFFF</color>
+    <color name="yellow">#FFD700</color>
+</resources>

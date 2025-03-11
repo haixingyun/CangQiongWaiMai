@@ -12,6 +12,10 @@ import com.sunnyweather.changqiongwaimai.utils.ApiHelper
 
 class OrderRepository {
 
+    companion object {
+        var cachedOrder: OrderEntity = OrderEntity()
+    }
+
     /**
      * 获取订单数据
      */
@@ -74,10 +78,10 @@ class OrderRepository {
     /**
      * 提交订单
      */
-    suspend fun submitOrderApi(orderEntity: OrderEntity): ResponseData<OrderResultData> {
+    suspend fun submitOrderApi(): ResponseData<OrderResultData> {
         return ApiHelper.safeApiCall {
             Log.d("ApiCall", "提交订单")
-            RetrofitClient.apiService.submitOrder(orderEntity)
+            RetrofitClient.apiService.submitOrder(cachedOrder)
         }
     }
 

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.Flavor

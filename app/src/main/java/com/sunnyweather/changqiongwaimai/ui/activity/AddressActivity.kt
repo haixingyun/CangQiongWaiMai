@@ -6,8 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +13,6 @@ import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.AddressRequest
 import com.sunnyweather.changqiongwaimai.data.repository.AddressRepository
 import com.sunnyweather.changqiongwaimai.databinding.ActivityAddressBinding
-import com.sunnyweather.changqiongwaimai.databinding.FragmentOrderDetailBinding
 import com.sunnyweather.changqiongwaimai.ui.adapter.AddressAdapter
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import kotlinx.coroutines.launch

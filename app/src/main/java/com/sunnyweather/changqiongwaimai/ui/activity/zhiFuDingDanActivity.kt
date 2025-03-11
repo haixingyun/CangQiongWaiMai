@@ -98,4 +98,8 @@ class zhiFuDingDanActivity : AppCompatActivity() {
         countDownTimer = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        orderViewModel.submitOrder()
+    }
 }

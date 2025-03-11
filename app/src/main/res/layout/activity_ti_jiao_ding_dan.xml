@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:elevation="10dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,13 +35,11 @@
     <!-- 将内容放入 ScrollView 中 -->
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#E0E0E0"
+        app:layout_constraintBottom_toTopOf="@+id/floating_cart"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_cart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
@@ -263,18 +262,13 @@
 
     </ScrollView>
 
-    <!-- 底部固定的 Fragment -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_cart"
+    <include
+        android:id="@+id/floating_cart"
+        layout="@layout/fragment_cart"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_cart" />
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

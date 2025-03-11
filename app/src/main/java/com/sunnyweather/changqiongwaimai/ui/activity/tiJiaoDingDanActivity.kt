@@ -11,12 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.OrderDetail
 import com.sunnyweather.changqiongwaimai.data.model.OrderEntity
+import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
 import com.sunnyweather.changqiongwaimai.databinding.ActivityTiJiaoDingDanBinding
 import com.sunnyweather.changqiongwaimai.ui.adapter.OrderDetailAdapter
-import com.sunnyweather.changqiongwaimai.ui.fragment.FloatingCartFragment
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
@@ -24,7 +23,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class tiJiaoDingDanActivity : AppCompatActivity(), FloatingCartFragment.OnButtonClickListener {
+class tiJiaoDingDanActivity : AppCompatActivity(){
     private lateinit var binding: ActivityTiJiaoDingDanBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val addressViewModel: AddressViewModel by viewModels()
@@ -62,16 +61,23 @@ class tiJiaoDingDanActivity : AppCompatActivity(), FloatingCartFragment.OnButton
             } ?: emptyList()
 
             //为控件赋值
-            val totalPrice = cartData?.sumOf { it.number * it.amount + 8 }  //购物车总价
-            val formattedPrice = String.format("%.2f", totalPrice?.toDouble())
-            binding.JieSuan.orderTotalPrice.text = "￥$formattedPrice"  //为控件赋值
-            val DaBaoFei = cartData?.sumOf { it.number ?: 0 } ?: 0
-            binding.JieSuan.DaBaoFei.text = "￥${DaBaoFei}"  //打包费
-            binding.JieSuan.PeiSongFei.text = "￥${DaBaoFei * 2}"  //配送费
+            val totalPrice = cartData?.sumOf { it.number * it.amount + 8 } ?: 0//购物车总价
+            val DaBaoFei = cartData?.sumOf { it.number ?: 0 } ?: 0  //打包费
+            val PeiSongFei = DaBaoFei * 2   //配送费
+
+            val totalAmount = totalPrice+DaBaoFei+PeiSongFei
+            val formattedPrice = String.format("%.2f", totalAmount?.toDouble())  //格式化总价为两位小数
+
+            binding.JieSuan.orderTotalPrice.text = "￥$formattedPrice"  //商品详细总价
+            binding.JieSuan.DaBaoFei.text = "￥$DaBaoFei"  //打包费
+            binding.JieSuan.PeiSongFei.text = "$PeiSongFei"  //配送费
+            binding.floatingCart.cartBadge.text = cartData?.sumOf { it.number }.toString()  //总数量
+            binding.floatingCart.cartTotalPrice.text = "￥${totalAmount}"  //购物车总价
+
 
             //为viewModel的orderEntity赋值，这是请求参数
-            orderEntity.amount = totalPrice!!
-            orderEntity.packAmount = cartData.sumOf { it.number }  //赋值打包费
+            orderEntity.amount = totalPrice
+            orderEntity.packAmount = cartData?.sumOf { it.number }  //赋值打包费
 
             // 处理购物车数据（例如显示在页面上）
             OrderDetailRecycler.adapter = OrderDetailAdapter(this, orderDetailList)
@@ -120,11 +126,7 @@ class tiJiaoDingDanActivity : AppCompatActivity(), FloatingCartFragment.OnButton
         orderEntity.tablewareNumber = binding.CanJuShuLiang.text?.toString()?.toIntOrNull() ?: 0
         orderEntity.deliveryStatus = 0  //餐具状态
 
-        //加载购物车fragment组件
-        val fragment = FloatingCartFragment.newInstance("去支付")  // 你可以换成不同的文字
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_cart, fragment)
-            .commit()
+
         //事件 地址
         binding.address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
@@ -133,7 +135,12 @@ class tiJiaoDingDanActivity : AppCompatActivity(), FloatingCartFragment.OnButton
         binding.PeiSong.setOnClickListener {
             showInputDialog()
         }
-
+        binding.floatingCart.cartCheckout.setOnClickListener {
+            OrderRepository.cachedOrder = orderEntity
+            val intent = Intent(this,zhiFuDingDanActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 
@@ -164,11 +171,4 @@ class tiJiaoDingDanActivity : AppCompatActivity(), FloatingCartFragment.OnButton
         dialog.show()  // 显示对话框
     }
 
-    //事件 结算按钮回调
-    override fun onButtonClicked() {
-        //购物车fragment组件去支付按钮回调
-        orderViewModel.submitOrder(orderEntity)
-        val intent = Intent(this, zhiFuDingDanActivity::class.java)
-        startActivity(intent)
-    }
 }

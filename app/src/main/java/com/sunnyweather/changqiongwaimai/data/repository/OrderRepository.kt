@@ -40,7 +40,7 @@ class OrderRepository {
      */
     suspend fun getOrderDetails(id: Int): ResponseData<Order> {
         return ApiHelper.safeApiCall {
-            Log.d("ApiCall", "再来一单")
+            Log.d("ApiCall", "根据订单id查看订单详情")
             RetrofitClient.apiService.getOrderDetails(id)
         }
     }
@@ -102,6 +102,16 @@ class OrderRepository {
         return ApiHelper.safeApiCall {
             Log.d("ApiCall", "催单")
             RetrofitClient.apiService.CuiDan(orderId)
+        }
+    }
+
+    /**
+     * 取消订单
+     */
+    suspend fun cancelOrder(orderId: Int): ResponseData<*> {
+        return ApiHelper.safeApiCall {
+            Log.d("ApiCall","取消订单")
+            RetrofitClient.apiService.cancelOrder(orderId)
         }
     }
 

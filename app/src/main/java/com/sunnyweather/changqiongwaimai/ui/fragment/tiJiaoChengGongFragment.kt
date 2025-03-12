@@ -47,7 +47,7 @@ class tiJiaoChengGongFragment : DialogFragment() {
 
         binding.ChaKanDingDan.setOnClickListener {
             val intent = Intent(requireContext(), OrDerDetailActivity::class.java)
-            intent.putExtra("order_id", orderViewModel.orderNumber.value)
+            intent.putExtra("order_id", orderViewModel.orderId.value)
             startActivity(intent)
             dismiss()
         }

@@ -150,4 +150,10 @@ interface ApiService {
      */
     @GET("order/reminder/{orderId}")
     suspend fun CuiDan(@Path("orderId") orderId: Int) : ResponseData<*>
+
+    /**
+     * 取消订单
+     */
+    @PUT("order/cancel/{orderId}")
+    suspend fun cancelOrder(@Path("orderId") orderId: Int) : ResponseData<*>
 }

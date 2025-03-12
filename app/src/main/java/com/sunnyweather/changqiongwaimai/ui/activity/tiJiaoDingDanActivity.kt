@@ -18,7 +18,6 @@ import com.sunnyweather.changqiongwaimai.databinding.ActivityTiJiaoDingDanBindin
 import com.sunnyweather.changqiongwaimai.ui.adapter.OrderDetailAdapter
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
-import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -60,7 +59,7 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
             } ?: emptyList()
 
             //为控件赋值
-            val totalPrice = cartData?.sumOf { it.number * it.amount + 8 } ?: 0//购物车总价
+            val totalPrice = cartData?.sumOf { it.number * it.amount } ?: 0//购物车总价
             val DaBaoFei = cartData?.sumOf { it.number ?: 0 } ?: 0  //打包费
             val PeiSongFei = DaBaoFei * 2   //配送费
 
@@ -75,8 +74,9 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
 
 
             //为viewModel的orderEntity赋值，这是请求参数
-            orderEntity.amount = totalPrice
+            orderEntity.amount = totalAmount
             orderEntity.packAmount = cartData?.sumOf { it.number }  //赋值打包费
+
 
             // 处理购物车数据（例如显示在页面上）
             OrderDetailRecycler.adapter = OrderDetailAdapter(this, orderDetailList)

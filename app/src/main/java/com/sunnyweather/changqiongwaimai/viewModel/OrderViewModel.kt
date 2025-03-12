@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class OrderViewModel : ViewModel() {
 
-    val orderNumber = MutableLiveData<String>()
+    val orderId = MutableLiveData<Int>()
 
     val orderEntity = MutableLiveData<OrderEntity>()
 

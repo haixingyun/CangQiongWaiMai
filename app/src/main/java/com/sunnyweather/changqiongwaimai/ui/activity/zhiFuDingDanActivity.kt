@@ -42,7 +42,7 @@ class zhiFuDingDanActivity : AppCompatActivity() {
                 binding.orderCode.text = "苍穹餐厅-${orderDetail.orderNumber}"
                 binding.price.text = orderDetail.orderAmount.toString()
                 paymentOrder.orderNumber = orderDetail.orderNumber
-                orderViewModel.orderNumber.value = orderDetail.orderNumber
+                orderViewModel.orderId.value = orderDetail.id
             }
         }
         if (binding.DanXuanKuang.isChecked) {

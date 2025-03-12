@@ -26,6 +26,7 @@ class OrDerDetailActivity : AppCompatActivity() {
     private lateinit var cartRepository: CartRepository
     private lateinit var orderRepository: OrderRepository
     private val orderDetailViewModel: OrderViewModel by viewModels()
+    private var orderId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +39,13 @@ class OrDerDetailActivity : AppCompatActivity() {
         //绑定recycler
         OrderDetailRecycler = binding.centerLayout.orderDetailRecyclerView
         OrderDetailRecycler.layoutManager = LinearLayoutManager(this)
+
         //获取前面activity传递的orderId
-        val orderId = intent.getIntExtra("order_id", -1)
+         orderId = intent.getIntExtra("order_id", -1)
+
         //发送请求
         orderDetailViewModel.getOrderDetail(orderId)
+
         //订阅根据id订单获取订单详情数据
         orderDetailViewModel.orderData.observe(this) { order ->
             order?.let {
@@ -106,6 +110,14 @@ class OrDerDetailActivity : AppCompatActivity() {
             }
         }
 
+        //事件 取消订单
+        binding.cancelOrder.setOnClickListener {
+            lifecycleScope.launch {
+                orderRepository.cancelOrder(orderId)  //取消订单
+                orderDetailViewModel.getOrderDetail(orderId)  //获取详细订单
+            }
+            Toast.makeText(this, "取消成功", Toast.LENGTH_SHORT).show()
+        }
 
         //事件 再来一单
         binding.zaiLaiYiDan.setOnClickListener {
@@ -133,6 +145,6 @@ class OrDerDetailActivity : AppCompatActivity() {
             }
             build.show()
         }
-
     }
+
 }

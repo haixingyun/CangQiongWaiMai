@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="订单详情"
-        app:titleTextColor="@color/black"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+        app:titleTextColor="@color/black" />
 
     <!-- 原有的 ScrollView 内容 -->
     <android.widget.ScrollView
@@ -24,11 +24,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main"
-            tools:context=".ui.activity.OrDerDetailActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#E0E0E0"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:context=".ui.activity.OrDerDetailActivity">
 
             <LinearLayout
                 android:id="@+id/Top"
@@ -54,6 +54,36 @@
                         android:text="订单已取消"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:id="@+id/DaoJiShi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/waimailogo" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="等待支付:  " />
+
+                        <TextView
+                            android:id="@+id/timeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14:04"
+                            android:textColor="@color/home_yellow" />
+
+
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -91,6 +121,27 @@
                             android:text="再来一单" />
                     </LinearLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tips"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/waimailogo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请在15分钟内完成支付，超时将自动取消。" />
 
                 </LinearLayout>
 

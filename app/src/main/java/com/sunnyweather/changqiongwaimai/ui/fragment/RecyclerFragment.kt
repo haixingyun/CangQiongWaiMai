@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
-import com.sunnyweather.changqiongwaimai.data.model.Order
 import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
 import com.sunnyweather.changqiongwaimai.databinding.FragmentListBinding
@@ -40,6 +39,7 @@ class RecyclerFragment : Fragment() {
     private lateinit var cartRepository: CartRepository
     private lateinit var orderRepository: OrderRepository
     private val orderViewModel: OrderViewModel by viewModels()
+    val orderStatus = arguments?.getString(ARG_ORDER_STATUS) ?: "全部订单"  //默认加载全部订单         // 获取传入的订单状态参数
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,14 +57,14 @@ class RecyclerFragment : Fragment() {
 
         cartRepository = CartRepository()
         orderRepository = OrderRepository()
+
+
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 获取传入的订单状态参数
-        val orderStatus = arguments?.getString(ARG_ORDER_STATUS) ?: "全部订单"  //默认加载全部订单
 
         //主要改动：
         //observe(viewLifecycleOwner)：使用 viewLifecycleOwner 来观察 LiveData。
@@ -73,6 +73,8 @@ class RecyclerFragment : Fragment() {
 
         ordersRecyclerView = binding.recyclerView
         ordersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+
 
         //请求查询最近订单数据
         orderViewModel.getOrders(orderStatus)
@@ -121,5 +123,10 @@ class RecyclerFragment : Fragment() {
                 )
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        orderViewModel.getOrders(orderStatus)
     }
 }

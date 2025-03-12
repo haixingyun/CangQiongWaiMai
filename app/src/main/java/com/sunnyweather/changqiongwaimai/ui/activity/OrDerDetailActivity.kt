@@ -2,6 +2,7 @@ package com.sunnyweather.changqiongwaimai.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +20,9 @@ import com.sunnyweather.changqiongwaimai.databinding.ActivityOrderDetailBinding
 import com.sunnyweather.changqiongwaimai.ui.adapter.OrderDetailAdapter
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class OrDerDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrderDetailBinding
@@ -27,6 +31,13 @@ class OrDerDetailActivity : AppCompatActivity() {
     private lateinit var orderRepository: OrderRepository
     private val orderDetailViewModel: OrderViewModel by viewModels()
     private var orderId: Int = 0
+    //倒计时变量
+    private lateinit var orderTimeString: String
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+    private var countDownTimer: CountDownTimer? = null
+    // 截止时间 = 下单时间 + 15 分钟
+    private val paymentDurationMillis = 15 * 60 * 1000L
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +52,7 @@ class OrDerDetailActivity : AppCompatActivity() {
         OrderDetailRecycler.layoutManager = LinearLayoutManager(this)
 
         //获取前面activity传递的orderId
-         orderId = intent.getIntExtra("order_id", -1)
+        orderId = intent.getIntExtra("order_id", -1)
 
         //发送请求
         orderDetailViewModel.getOrderDetail(orderId)
@@ -54,6 +65,12 @@ class OrDerDetailActivity : AppCompatActivity() {
                     1 -> {
                         binding.orderState.text = "等待支付"
                         binding.CuiDan.text = "立即支付"
+                        binding.tips.visibility = View.VISIBLE
+                        binding.DaoJiShi.visibility = View.VISIBLE
+                         orderTimeString = order.orderTime // 下单时间字符串
+                        //倒计时
+                        startCountDown()
+                        //事件 去支付
                         binding.CuiDan.setOnClickListener {
                             orderDetailViewModel._orderDetail.value = OrderResultData(
                                 order.id,
@@ -117,6 +134,7 @@ class OrDerDetailActivity : AppCompatActivity() {
                 orderRepository.cancelOrder(orderId)  //取消订单
                 orderDetailViewModel.getOrderDetail(orderId)  //获取详细订单
             }
+            binding.DaoJiShi.visibility = View.INVISIBLE  //让倒计时消失
             Toast.makeText(this, "取消成功", Toast.LENGTH_SHORT).show()
         }
 
@@ -146,6 +164,42 @@ class OrDerDetailActivity : AppCompatActivity() {
             }
             build.show()
         }
+    }
+
+    private fun startCountDown() {
+        val orderDate: Date? = dateFormat.parse(orderTimeString)
+        if (orderDate == null) {
+            binding.timeText.text = "时间格式错误"
+            return
+        }
+        val deadline = orderDate.time + paymentDurationMillis
+        val currentTime = System.currentTimeMillis()
+        val timeRemaining = deadline - currentTime
+
+        if (timeRemaining <= 0) {
+            // 倒计时结束或订单已超时
+            binding.timeText.text = "订单已超时"
+            return
+        }
+
+        countDownTimer?.cancel()
+        countDownTimer = object : CountDownTimer(timeRemaining, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = (millisUntilFinished / (60 * 1000)).toInt()
+                val seconds = ((millisUntilFinished / 1000) % 60).toInt()
+                binding.timeText.text = String.format("%02d:%02d", minutes, seconds)
+            }
+
+            override fun onFinish() {
+                binding.timeText.text = "订单已超时"
+            }
+        }.start()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer?.cancel()
     }
 
 }

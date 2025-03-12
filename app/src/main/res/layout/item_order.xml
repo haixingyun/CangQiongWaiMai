@@ -82,8 +82,8 @@
 
         <TextView
             android:id="@+id/zaiLaiYiDan"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:background="@drawable/button_border"
             android:padding="10dp"
@@ -91,9 +91,9 @@
 
         <TextView
             android:id="@+id/ChuiDan"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:visibility="gone"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:text="催单"
             android:padding="10dp"
             android:gravity="center"

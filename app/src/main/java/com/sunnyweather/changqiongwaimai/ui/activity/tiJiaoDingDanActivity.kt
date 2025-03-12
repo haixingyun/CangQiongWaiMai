@@ -27,7 +27,6 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
     private lateinit var binding: ActivityTiJiaoDingDanBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val addressViewModel: AddressViewModel by viewModels()
-    private val orderViewModel: OrderViewModel by viewModels()
     private lateinit var OrderDetailRecycler: RecyclerView
     private lateinit var orderEntity: OrderEntity
 
@@ -70,7 +69,7 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
 
             binding.JieSuan.orderTotalPrice.text = "￥$formattedPrice"  //商品详细总价
             binding.JieSuan.DaBaoFei.text = "￥$DaBaoFei"  //打包费
-            binding.JieSuan.PeiSongFei.text = "$PeiSongFei"  //配送费
+            binding.JieSuan.PeiSongFei.text = "￥$PeiSongFei"  //配送费
             binding.floatingCart.cartBadge.text = cartData?.sumOf { it.number }.toString()  //总数量
             binding.floatingCart.cartTotalPrice.text = "￥${totalAmount}"  //购物车总价
 

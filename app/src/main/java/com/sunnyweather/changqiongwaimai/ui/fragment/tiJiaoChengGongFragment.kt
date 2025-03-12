@@ -42,6 +42,7 @@ class tiJiaoChengGongFragment : DialogFragment() {
         binding.FanHuiShouYe.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
+            requireActivity().finish() // 销毁宿主 activity
             dismiss()
         }
 
@@ -49,6 +50,7 @@ class tiJiaoChengGongFragment : DialogFragment() {
             val intent = Intent(requireContext(), OrDerDetailActivity::class.java)
             intent.putExtra("order_id", orderViewModel.orderId.value)
             startActivity(intent)
+            requireActivity().finish()
             dismiss()
         }
     }

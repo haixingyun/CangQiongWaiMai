@@ -16,7 +16,8 @@ class OrderAdapters(
     private val orders: List<Order>,
     private val zaiLaiYiDan: (Int) -> Unit,
     private val orderDetail: (Int) -> Unit, // 这里是传递回调函数
-    private val CuiDan: (Int) -> Unit  //催单按钮回调
+    private val CuiDan: (Int) -> Unit,  //催单按钮回调
+    private val goPay:(Int) -> Unit  //去支付按钮回调
 
 ) : RecyclerView.Adapter<OrderAdapters.OrderViewHolder>() {
 
@@ -54,6 +55,9 @@ class OrderAdapters(
         }else if (order.status == 1) {
             holder.CuiDan.visibility = View.VISIBLE
             holder.CuiDan.text = "去支付"
+            holder.CuiDan.setOnClickListener {
+                goPay(order.id)
+            }
         }
 
         holder.totalNumber.text = "共${order.packAmount}件"

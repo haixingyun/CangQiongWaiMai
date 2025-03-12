@@ -100,6 +100,7 @@ class OrDerDetailActivity : AppCompatActivity() {
                 binding.PeiSongDiZhi.text = order.address
                 binding.orderNumber.text = order.number
                 binding.orderTime.text = order.orderTime
+
                 when (order.payMethod) {
                     1 -> binding.payManner.text = "微信"
                     2 -> binding.payManner.text = "支付宝"

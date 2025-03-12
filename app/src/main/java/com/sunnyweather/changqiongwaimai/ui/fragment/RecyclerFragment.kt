@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.sunnyweather.changqiongwaimai.data.model.Order
 import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
 import com.sunnyweather.changqiongwaimai.databinding.FragmentListBinding
@@ -110,6 +111,12 @@ class RecyclerFragment : Fragment() {
                             positiveButton(text = "确定")
                             negativeButton(text = "取消")
                         }
+                    },
+                    //去支付按钮回调
+                    goPay = { orderId ->
+                        val intent = Intent(requireContext(), OrDerDetailActivity::class.java)
+                        intent.putExtra("order_id", orderId)  // 添加数据，orderId 为你想传递的值
+                        startActivity(intent)
                     }
                 )
             }

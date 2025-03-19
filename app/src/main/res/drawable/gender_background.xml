@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <solid android:color="@color/white" /> <!-- 默认未选中时的颜色 -->
+        <corners android:radius="50dp" /> <!-- 圆形 -->
+        <stroke
+            android:color="#B0BEC5"
+            android:width="2dp" />
+</shape>

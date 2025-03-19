@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="8dp"
+        android:text="回鱼两斤"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="辣度" />
+
+    <!-- 使用 RadioGroup 代替 LinearLayout -->
+    <RadioGroup
+        android:id="@+id/spicy_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_no_spicy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:layout_height="40dp"
+            android:button="@null"
+            android:background="@drawable/kowei_background"
+            android:gravity="center"
+            android:text="不辣"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/rb_little_spicy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:button="@null"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/kowei_background"
+            android:gravity="center"
+            android:text="微辣"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/rb_medium_spicy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:button="@null"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/kowei_background"
+            android:gravity="center"
+            android:text="中辣"
+            android:textSize="20sp" />
+
+        <RadioButton
+            android:id="@+id/rb_high_spicy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:button="@null"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/kowei_background"
+            android:gravity="center"
+            android:text="重辣"
+            android:textSize="20sp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/goods_price"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/red"
+            android:gravity="center_vertical"
+            android:text="72" />
+
+        <TextView
+            android:id="@+id/cart_add"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/rounded_corner_button"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:gravity="center"
+            android:text="加入购物车"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

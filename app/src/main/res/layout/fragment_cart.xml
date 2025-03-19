@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/floating_cart"
+    android:layout_height="50dp"
+    app:cardBackgroundColor="@color/black"
+    app:cardCornerRadius="30dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp">
+
+            <!-- 购物车图标 -->
+            <ImageView
+                android:id="@+id/cart_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/waimai" />
+
+            <!-- 购物车商品数量 -->
+            <TextView
+                android:id="@+id/cart_badge"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/red_bei_jing"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/cart_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="￥0"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <!-- 结算按钮 -->
+        <TextView
+            android:id="@+id/cart_checkout"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="去支付"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/yellow_text_bei_jing"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

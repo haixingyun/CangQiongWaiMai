@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/orderTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/xia_dan_shi_jian"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="2025-02-19 21:05"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/orderStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已取消"
+            android:textColor="#FF9933" />
+    </LinearLayout>
+
+    <!-- 设置 RecyclerView 宽度为 match_parent -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderTop"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_order_goods" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/nihao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderTop">
+
+        <TextView
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥ 580.00"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/totalNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共14件" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nihao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orderRecyclerView">
+
+
+
+        <TextView
+            android:id="@+id/zaiLaiYiDan"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/button_border"
+            android:padding="10dp"
+            android:text="再来一单" /> <!-- 使文本右对齐 -->
+
+        <TextView
+            android:id="@+id/ChuiDan"
+            android:layout_width="80dp"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="催单"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/yellow_background_border"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

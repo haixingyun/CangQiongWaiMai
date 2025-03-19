@@ -1,2 +1,1 @@
-# CangQiongWaiMai
-一个小辣鸡写的辣鸡AndroidApp
+石山代码，不要看，可以体验下app

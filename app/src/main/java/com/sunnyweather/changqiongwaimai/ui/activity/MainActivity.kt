@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var menuRecyclerView: RecyclerView
     private lateinit var goodsRecyclerView: RecyclerView
-    private lateinit var menuAdapter: MenuAdapter
     private lateinit var categoryRepository: CategoryRepository
 
     private val postViewModel: PostViewModel by viewModels()
@@ -41,30 +40,28 @@ class MainActivity : AppCompatActivity() {
 
     // 声明全局变量保存 GoodsAdapter 实例
     private lateinit var goodsAdapter: GoodsAdapter
-
+    private lateinit var menuAdapter: MenuAdapter
     private val menuList = ArrayList<MenuItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        或者使用 Jetpack WindowInsetsControllerCompat（推荐）
-        ViewCompat.getWindowInsetsController(window.decorView)?.apply {
-            isAppearanceLightStatusBars = true // 文字黑色
-        }
 
+        // 状态栏文字黑色
+        ViewCompat.getWindowInsetsController(window.decorView)?.apply {
+            isAppearanceLightStatusBars = true
+        }
+        //转台栏背景变成白色
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
-
-        cartRepository = CartRepository(/* 如果需要参数，则传入相应参数 */)
-        categoryRepository = CategoryRepository()
-
+        //获取控件
         menuRecyclerView = findViewById(R.id.menuRecyclerView)
-        goodsRecyclerView = findViewById(R.id.goodsRecyclerView)
+        goodsRecyclerView = findViewById(R.id.goodsRecyclerView)  //商品recycler
 
-        //在 onCreate 中初始化 Adapter
-        // 初始化 RecyclerView（假设 goodsRecyclerView 已在布局中定义）
-        goodsRecyclerView = findViewById(R.id.goodsRecyclerView)
-        goodsRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        //初始化Repository
+        cartRepository = CartRepository()
+        categoryRepository = CategoryRepository()
 
         // 创建 GoodsAdapter 实例，并传入初始数据为空的 MutableList
         goodsAdapter = GoodsAdapter(
@@ -114,8 +111,9 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        // 将创建好的 GoodsAdapter 设置给 RecyclerView
-        goodsRecyclerView.adapter = goodsAdapter
+        //RecyclerView的配置
+        goodsRecyclerView.layoutManager = LinearLayoutManager(this)  //商品recycler纵向布局
+        goodsRecyclerView.adapter = goodsAdapter // 将创建好的 GoodsAdapter 设置给 RecyclerView
 
         // 此外，在观察 LiveData 数据变化时调用 updateGoodsList 方法来更新数据：
         postViewModel.posts.observe(this) { result ->
@@ -144,9 +142,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //RecyclerView的配置
         menuRecyclerView.adapter = menuAdapter
-        // 设置商品 RecyclerView的排序方式
-        goodsRecyclerView.layoutManager = LinearLayoutManager(this)
+        goodsRecyclerView.layoutManager = LinearLayoutManager(this) //设置商品 RecyclerView的排序方式
 
 
         // 监听请求失败
@@ -162,13 +160,12 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, fragment)
             .commit()
 
-        //监听个中心点击事件
+        //事件 个中心点
         val geRenZhongXin = findViewById<LinearLayout>(R.id.iv_GeRenZhongXin)
         geRenZhongXin.setOnClickListener {
             val intent = Intent(this, MyActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     fun addList() {
@@ -186,14 +183,12 @@ class MainActivity : AppCompatActivity() {
         menuList.add(MenuItem("汤类", 21))
     }
 
+    //在第一次创建时和每次不可见变为可见时调用
     override fun onResume() {
         super.onResume()
         //查询购物车
         cartViewModel.getCart()
-        lifecycleScope.launch {
-            postViewModel.fetchPosts(GlobalData.id)
-        }
-
+        postViewModel.fetchPosts(GlobalData.id)
     }
 }
 

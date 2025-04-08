@@ -22,15 +22,15 @@ class MyActivity : AppCompatActivity() {
         binding = ActivityMyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //状态栏黄色
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
         // 在 MyActivity 中加载 RecyclerFragment
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null) {   //只在 Activity 首次创建 时执行（即 savedInstanceState == null 时）
+            //supportFragmentManager 是 管理 Fragment 的类，常用来 添加、替换、移除 Fragment。
+            //beginTransaction() 表示 开启一次 Fragment 事务（FragmentTransaction），允许你对 Fragment 进行一系列操作（如 replace()、add()、remove() 等）。
             supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    RecyclerFragment.newInstance("")
-                )  // 使用 FragmentContainerView 来加载 RecyclerFragment
+                .replace(R.id.fragmentContainer, RecyclerFragment.newInstance("最近订单"))
                 .commit()
         }
 

@@ -58,7 +58,6 @@ class RecyclerFragment : Fragment() {
         cartRepository = CartRepository()
         orderRepository = OrderRepository()
 
-
     }
 
 
@@ -71,10 +70,15 @@ class RecyclerFragment : Fragment() {
         //requireContext()：使用 requireContext() 来获取上下文传递给 Toast 和 Intent。
         //lifecycleScope.launch：确保使用 viewLifecycleOwner.lifecycleScope 来启动协程，确保它与视图的生命周期绑定。
 
+
+
         ordersRecyclerView = binding.recyclerView
         ordersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
+        if (orderViewModel.post.value == null) {
+            orderViewModel.getOrders(orderStatus)
+        }
 
         //请求查询最近订单数据
         orderViewModel.getOrders(orderStatus)
@@ -125,8 +129,9 @@ class RecyclerFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        orderViewModel.getOrders(orderStatus)
-    }
+////     移除 onResume() 中的重复调用
+//     override fun onResume() {
+//         super.onResume()
+//         orderViewModel.getOrders(orderStatus)
+//     }
 }

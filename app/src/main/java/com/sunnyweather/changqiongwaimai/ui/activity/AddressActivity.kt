@@ -13,7 +13,7 @@ import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.AddressRequest
 import com.sunnyweather.changqiongwaimai.data.repository.AddressRepository
 import com.sunnyweather.changqiongwaimai.databinding.ActivityAddressBinding
-import com.sunnyweather.changqiongwaimai.ui.adapter.AddressAdapter
+import com.sunnyweather.changqiongwaimai.ui.adapter.AddressAdapterss
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import kotlinx.coroutines.launch
 
@@ -40,7 +40,7 @@ class AddressActivity : AppCompatActivity() {
         //订阅addressViewModel
         addressViewModel.address.observe(this) { result ->
             result?.let {
-                addressRecyclerView.adapter = AddressAdapter(
+                addressRecyclerView.adapter = AddressAdapterss(
                     this, result, defaultAddress = { id ->
                         lifecycleScope.launch {
                             //请求：根据id设置默认地址
@@ -61,7 +61,7 @@ class AddressActivity : AppCompatActivity() {
                 )
             }
         }
-
+        //事件：新增地址
         binding.addAddressBook.setOnClickListener {
             val intent = Intent(this, EditAddressActivity::class.java)
             startActivity(intent)

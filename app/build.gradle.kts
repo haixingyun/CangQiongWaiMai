@@ -20,6 +20,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false // 开启代码混淆
@@ -31,10 +36,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-        buildFeatures {
-            viewBinding = true
-            dataBinding = true
         }
     }
     compileOptions {
@@ -71,5 +72,10 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0") // 如果需要使用Glide的注解处理器，启用这个依赖
 
     implementation("com.afollestad.material-dialogs:core:3.3.0")
+
+    // ViewPager2
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    // Material Components (包含 TabLayout)
+    implementation ("com.google.android.material:material:1.4.0")
 
 }

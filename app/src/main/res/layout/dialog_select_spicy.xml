@@ -31,11 +31,11 @@
         <RadioButton
             android:id="@+id/rb_no_spicy"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:checked="true"
             android:layout_height="40dp"
-            android:button="@null"
+            android:layout_weight="1"
             android:background="@drawable/kowei_background"
+            android:button="@null"
+            android:checked="true"
             android:gravity="center"
             android:text="不辣"
             android:textSize="20sp" />
@@ -43,11 +43,11 @@
         <RadioButton
             android:id="@+id/rb_little_spicy"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="40dp"
-            android:button="@null"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:background="@drawable/kowei_background"
+            android:button="@null"
             android:gravity="center"
             android:text="微辣"
             android:textSize="20sp" />
@@ -55,11 +55,11 @@
         <RadioButton
             android:id="@+id/rb_medium_spicy"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="40dp"
-            android:button="@null"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:background="@drawable/kowei_background"
+            android:button="@null"
             android:gravity="center"
             android:text="中辣"
             android:textSize="20sp" />
@@ -67,11 +67,11 @@
         <RadioButton
             android:id="@+id/rb_high_spicy"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="40dp"
-            android:button="@null"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:background="@drawable/kowei_background"
+            android:button="@null"
             android:gravity="center"
             android:text="重辣"
             android:textSize="20sp" />
@@ -93,21 +93,21 @@
         <TextView
             android:id="@+id/goods_price"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/red"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="72" />
+            android:text="72"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/cart_add"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/rounded_corner_button"
+            android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:gravity="center"
             android:text="加入购物车"
             android:textSize="20sp" />
 

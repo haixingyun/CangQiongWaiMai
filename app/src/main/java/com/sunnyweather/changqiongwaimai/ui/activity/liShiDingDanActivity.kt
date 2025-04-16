@@ -3,8 +3,9 @@ package com.sunnyweather.changqiongwaimai.ui.activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.utils.ViewPagerAdapter
 
@@ -15,10 +16,21 @@ class liShiDingDanActivity : AppCompatActivity() {
         setContentView(R.layout.activity_li_shi_ding_dan)
 
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
-        val viewPager: ViewPager = findViewById(R.id.viewPager)
+        val viewPager: ViewPager2 = findViewById(R.id.viewPager)
 
-        val adapter = ViewPagerAdapter(supportFragmentManager)
+        val adapter = ViewPagerAdapter(this)
         viewPager.adapter = adapter
-        tabLayout.setupWithViewPager(viewPager)
+        // 关联TabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "全部订单"
+                1 -> "待付款"
+                2 -> "已取消"
+                else -> ""
+            }
+        }.attach()
+
+        // 禁用预加载（按需）
+        viewPager.offscreenPageLimit = 1 // 0会有兼容性问题
     }
 }

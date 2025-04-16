@@ -2,6 +2,7 @@ package com.sunnyweather.changqiongwaimai.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,17 +18,21 @@ import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
 import com.sunnyweather.changqiongwaimai.databinding.FragmentListBinding
 import com.sunnyweather.changqiongwaimai.ui.activity.MainActivity
 import com.sunnyweather.changqiongwaimai.ui.activity.OrDerDetailActivity
-import com.sunnyweather.changqiongwaimai.ui.adapter.OrderAdapters
+import com.sunnyweather.changqiongwaimai.ui.adapter.OrderAdapter
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import kotlinx.coroutines.launch
 
 class RecyclerFragment : Fragment() {
 
+    //    companion object：这是 Kotlin 里用来定义类级别的成员的方式。companion object 中的成员可直接通过类名访问，不用创建类的实例。
+    //    @JvmStatic：这个注解的作用是让 newInstance 方法在 Java 代码里能像静态方法一样被调用。在 Kotlin 中，companion object 里的方法默认不是静态的，
+    //    不过借助 @JvmStatic 注解就能在 Java 代码里以静态方法的形式调用。
     companion object {
         private const val ARG_ORDER_STATUS = "order_status"
         fun newInstance(orderStatus: String): RecyclerFragment {
             val fragment = RecyclerFragment()
             val bundle = Bundle()
+            Log.d("111", orderStatus)
             bundle.putString(ARG_ORDER_STATUS, orderStatus)
             fragment.arguments = bundle
             return fragment
@@ -39,7 +44,28 @@ class RecyclerFragment : Fragment() {
     private lateinit var cartRepository: CartRepository
     private lateinit var orderRepository: OrderRepository
     private val orderViewModel: OrderViewModel by viewModels()
-    val orderStatus = arguments?.getString(ARG_ORDER_STATUS) ?: "全部订单"  //默认加载全部订单         // 获取传入的订单状态参数
+    // 声明 orderStatus，但推迟初始化
+    private lateinit var orderStatus: String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // --- 修改开始 ---
+        // 在 onCreate 中初始化 orderStatus，此时 arguments 肯定已经可用
+        arguments?.let { // 安全地访问 arguments
+            orderStatus = it.getString(ARG_ORDER_STATUS) ?: "全部订单" // 获取参数，提供默认值以防万一
+            Log.d("RecyclerFragment", "onCreate: Received orderStatus = $orderStatus") // 添加日志确认
+        } ?: run {
+            // 处理 arguments 为 null 的意外情况
+            orderStatus = "全部订单" // 这种情况理论上不应该发生，但做好防御
+            Log.e("RecyclerFragment", "onCreate: Arguments were unexpectedly null!")
+        }
+
+        cartRepository = CartRepository()
+        orderRepository = OrderRepository()
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,19 +78,13 @@ class RecyclerFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        cartRepository = CartRepository()
-        orderRepository = OrderRepository()
-
-
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        // 现在 'orderStatus' 变量包含了从 MyActivity 正确传递过来的值
+        Log.d("RecyclerFragment", "onViewCreated: Using orderStatus = $orderStatus to get orders") // 添加日志确认
 
         //主要改动：
         //observe(viewLifecycleOwner)：使用 viewLifecycleOwner 来观察 LiveData。
@@ -74,7 +94,9 @@ class RecyclerFragment : Fragment() {
         ordersRecyclerView = binding.recyclerView
         ordersRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-
+        if (orderViewModel.post.value == null) {
+            orderViewModel.getOrders(orderStatus)
+        }
 
         //请求查询最近订单数据
         orderViewModel.getOrders(orderStatus)
@@ -82,7 +104,7 @@ class RecyclerFragment : Fragment() {
         //监听最近订单详情数据
         orderViewModel.post.observe(viewLifecycleOwner) { result ->
             result?.records?.let { orderData ->
-                ordersRecyclerView.adapter = OrderAdapters(requireContext(), orderData,
+                ordersRecyclerView.adapter = OrderAdapter(requireContext(), orderData,
                     zaiLaiYiDan = { orderId ->
                         Toast.makeText(requireContext(), "点击了再来一单", Toast.LENGTH_SHORT)
                             .show()
@@ -125,8 +147,9 @@ class RecyclerFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        orderViewModel.getOrders(orderStatus)
-    }
+////     移除 onResume() 中的重复调用
+//     override fun onResume() {
+//         super.onResume()
+//         orderViewModel.getOrders(orderStatus)
+//     }
 }

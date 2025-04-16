@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class tiJiaoDingDanActivity : AppCompatActivity(){
+class tiJiaoDingDanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTiJiaoDingDanBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val addressViewModel: AddressViewModel by viewModels()
@@ -64,7 +64,7 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
             val DaBaoFei = cartData?.sumOf { it.number ?: 0 } ?: 0  //打包费
             val PeiSongFei = DaBaoFei * 2   //配送费
 
-            val totalAmount = totalPrice+DaBaoFei+PeiSongFei
+            val totalAmount = totalPrice + DaBaoFei + PeiSongFei
             val formattedPrice = String.format("%.2f", totalAmount?.toDouble())  //格式化总价为两位小数
 
             binding.JieSuan.orderTotalPrice.text = "￥$formattedPrice"  //商品详细总价
@@ -116,9 +116,13 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
                 val formatter = DateTimeFormatter.ofPattern("HH:mm") // 格式化为 时:分
                 binding.SongDaShiJian.text = now.format(formatter) // 设置文本
             }
-            if (addressDate == null){
-            binding.DiZhiBiaoTi.visibility = View.VISIBLE
-            binding.address.visibility = View.GONE
+            if (addressDate == null) {
+                binding.DiZhiBiaoTi.visibility = View.VISIBLE
+                binding.ShouHuoBiaoTi.visibility = View.GONE
+                binding.tvPeiSongPrompt.visibility = View.GONE
+                binding.address.visibility = View.GONE
+                binding.tvPeiSongPrompt2.visibility = View.GONE
+                binding.llSngDaTime.visibility = View.GONE
             }
         }
 
@@ -142,12 +146,12 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
         }
         binding.floatingCart.cartCheckout.setOnClickListener {
             OrderRepository.cachedOrder = orderEntity
-            val intent = Intent(this,zhiFuDingDanActivity::class.java)
+            val intent = Intent(this, zhiFuDingDanActivity::class.java)
             startActivity(intent)
             finish()
         }
         binding.DiZhiBiaoTi.setOnClickListener {
-             val intent = Intent(this,AddressActivity::class.java)
+            val intent = Intent(this, AddressActivity::class.java)
             startActivity(intent)
         }
 

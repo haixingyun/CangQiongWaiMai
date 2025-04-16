@@ -84,7 +84,7 @@ class FloatingCartFragment : Fragment() {
                 val totalNumber = posts.sumOf { it.number }
                 val totalPrice = posts.sumOf { it.amount * it.number }
                 goodsNumber.text = totalNumber.toString()
-                cartTotalPrice.text = totalPrice.toString()
+                cartTotalPrice.text = "￥$totalPrice"
             }
         }
 

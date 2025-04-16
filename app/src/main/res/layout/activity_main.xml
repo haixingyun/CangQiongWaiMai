@@ -223,16 +223,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:src="@drawable/ic_call" />
-
-
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"></LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -258,7 +250,6 @@
         <!-- 右侧商品列表 -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goodsRecyclerView"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_goods" />
@@ -268,6 +259,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:visibility="gone"
             android:text="该分类下没有菜品" />
 
     </LinearLayout>

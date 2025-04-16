@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.testapplication.ui.AddressPickerBottomSheet
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.Address
 import com.sunnyweather.changqiongwaimai.data.repository.AddressRepository
@@ -37,12 +38,12 @@ class EditAddressActivity : AppCompatActivity() {
         Address1 = Address()
         var index: Int = 0
 
+        //看调用者传递参数没有  传入了id是新增编辑地址
         val addressId = intent.getIntExtra("address_id", -1)
-
-        if (addressId == -1) {
+        if (addressId == -1) {   //新增地址
             binding.toolbarTitle.text = "新增地址"
             binding.deleteAddress.visibility = View.GONE
-        } else {
+        } else {    //编辑地址
             //发送根据di获取地址数据viewModel请求 ， 触发订阅
             addressViewModel.editAddress(addressId)
         }
@@ -53,10 +54,7 @@ class EditAddressActivity : AppCompatActivity() {
                 Address1 = address.copy()
                 binding.name.setText(address.consignee)
                 binding.phone.setText(address.phone)
-                binding.address.text = this.getString(
-                    R.string.address_format,
-                    address.provinceName, address.cityName, address.districtName
-                )
+                binding.address.text = "${Address1.provinceName}${Address1.cityName}${Address1.districtName}"
                 binding.XiangXiDiZhi.setText(address.detail)
                 when (address.label) {
                     "1" -> binding.labelGongShi.setBackgroundColor(Color.parseColor("#FFCC99"))
@@ -68,6 +66,7 @@ class EditAddressActivity : AppCompatActivity() {
                         binding.radioMen.setBackgroundResource(R.drawable.gender_background_xuanzhong)
                         binding.radioMen.isChecked = true
                     }
+
                     "1" -> {
                         binding.radioMen.setBackgroundResource(R.drawable.gender_background)
                         binding.radioGirl.setBackgroundResource(R.drawable.gender_background_xuanzhong)
@@ -163,6 +162,12 @@ class EditAddressActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            //检验地址是否为空
+            if (binding.address.text.isNullOrEmpty()) {
+                Toast.makeText(this, "地址不能为空", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             // 校验手机号是否为11位有效手机号
             if (binding.phone.text.isNullOrEmpty()) {
                 Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show()
@@ -175,24 +180,27 @@ class EditAddressActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
             Address1.consignee = binding.name.text.toString()
             Address1.phone = binding.phone.text.toString()
             Address1.sex = if (binding.radioMen.isChecked) "0" else "1"
 
+            // 为地址赋值 发送请求
             val addressText = binding.address.text.toString()
-            Address1.provinceName =
-                if (addressText.length >= 3) addressText.substring(0, 3) else addressText
-            Address1.cityName = if (addressText.length >= 6) addressText.substring(3, 6) else ""
-            Address1.districtName = addressText
+            val parts = addressText.trim().split("\\s+".toRegex())
+            val (province, city, district) = parts
+                .plus(listOf("", "", ""))  // 如果 parts 少于 3 个元素，会补上空串
+                .take(3)                    // 只取前 3 个
+            Address1.provinceName = province
+            Address1.cityName = city
+            Address1.districtName = district
+            Address1.detail = "${binding.XiangXiDiZhi.text}"
+
             if (index != 0) Address1.label = index.toString()
             //在协程中调用
             lifecycleScope.launch {
-                if (addressId == -1) addressRepository.saveAddressBook(Address1)
-                else addressRepository.putAddress(Address1)
-                //跳转到AddressActivity
-                val intent = Intent(this@EditAddressActivity, AddressActivity::class.java)
-                startActivity(intent)
+                if (addressId == -1) addressRepository.saveAddressBook(Address1)  //请求编辑地址
+                else addressRepository.putAddress(Address1)   //请求修改地址
+                //返回到AddressActivity
                 finish()
             }
         }
@@ -201,9 +209,9 @@ class EditAddressActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val result = addressRepository.deleteAddressBook(addressId)
                 if (result.code == 1) {
-                    // 删除完成后，跳转并显示提示
-                    val intent = Intent(this@EditAddressActivity, AddressActivity::class.java)
-                    startActivity(intent)
+                    // 删除完成后，返回到上一个界面
+//                    val intent = Intent(this@EditAddressActivity, AddressActivity::class.java)
+//                    startActivity(intent)
                     finish()
                     Toast.makeText(this@EditAddressActivity, "删除成功", Toast.LENGTH_SHORT).show()
                 } else {
@@ -214,6 +222,12 @@ class EditAddressActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+        }
+        //事件：点击选择地址
+        binding.address.setOnClickListener {
+            AddressPickerBottomSheet(this) { selected ->
+                binding.address.text = selected
+            }.show()
         }
     }
 }

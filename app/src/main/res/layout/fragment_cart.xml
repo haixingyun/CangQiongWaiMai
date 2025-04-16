@@ -62,3 +62,10 @@
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
+<!--    RelativeLayout 是 Android 中的一种布局方式，它允许你通过相对位置来摆放子 View。比如你可以让一个按钮“在父布局的右边”、“在另一个 TextView 的下方”等等。-->
+<!--    它比 LinearLayout 更灵活，因为不需要一层层嵌套来实现复杂布局。-->
+
+<!--    将当前 View 的尾部（End）对齐到父布局的尾部。-->
+<!--    android:layout_alignParentEnd="true"-->
+
+<!--    layout_centerVertical="true"  垂直居中-->

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ChangQiongWaiMai</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="address_format">%1$s%2$s%3$s</string>
+    <string name="order_toolbar_history">历史订单</string>
+    <string name="address_null_prompt">一个地址都没有~~新增一个吧</string>
+
+
 </resources>

@@ -17,7 +17,7 @@ class OrderRepository {
     }
 
     /**
-     * 获取订单数据
+     * 获取最近订单数据
      */
     suspend fun getOrders(): ResponseData<Orders> {
         return ApiHelper.safeApiCall {

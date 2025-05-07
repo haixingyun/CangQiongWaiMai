@@ -10,5 +10,8 @@ data class CategoryDish(
     val type: Int,
     val updateTime: String,
     val updateUser: Int
+
+
+
 )
 

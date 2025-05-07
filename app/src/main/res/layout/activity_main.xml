@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
         <!-- 左侧个人中心图标和文字 -->
         <LinearLayout
-            android:id="@+id/iv_GeRenZhongXin"
+            android:id="@+id/ll_user_go_my_activity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -223,16 +223,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:src="@drawable/ic_call" />
-
-
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"></LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -256,10 +248,11 @@
             tools:listitem="@layout/item_menu" />
 
         <!-- 右侧商品列表 -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goodsRecyclerView"
-            android:visibility="gone"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_goods" />
 
@@ -268,7 +261,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:visibility="gone"
             android:text="该分类下没有菜品" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 

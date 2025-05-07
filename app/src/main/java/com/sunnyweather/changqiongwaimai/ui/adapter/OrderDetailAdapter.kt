@@ -23,7 +23,6 @@ class OrderDetailAdapter(
     ): OrderDetailAdapter.OrderViewAdapter {
         val view = LayoutInflater.from(content).inflate(R.layout.item_order_detail, parent, false)
         return OrderDetailAdapter.OrderViewAdapter(view)
-
     }
 
     override fun getItemCount(): Int {
@@ -46,7 +45,7 @@ class OrderDetailAdapter(
 
     class OrderViewAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
          val orderDetailImg = itemView.findViewById<ImageView>(R.id.order_detail_img)
-         val goodsName = itemView.findViewById<TextView>(R.id.goods_name)
+         val goodsName = itemView.findViewById<TextView>(R.id.tv_good_name)
          val goodsNumber = itemView.findViewById<TextView>(R.id.goods_number)
          val goodsTotalPrice = itemView.findViewById<TextView>(R.id.goods_total_price)
     }

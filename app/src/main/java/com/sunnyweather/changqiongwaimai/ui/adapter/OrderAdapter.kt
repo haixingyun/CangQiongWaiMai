@@ -11,7 +11,7 @@ import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.Order
 import com.sunnyweather.changqiongwaimai.data.model.OrderDetail
 
-class OrderAdapters(
+class OrderAdapter(
     private val content: Context,
     private val orders: List<Order>,
     private val zaiLaiYiDan: (Int) -> Unit,
@@ -19,7 +19,7 @@ class OrderAdapters(
     private val CuiDan: (Int) -> Unit,  //催单按钮回调
     private val goPay:(Int) -> Unit  //去支付按钮回调
 
-) : RecyclerView.Adapter<OrderAdapters.OrderViewHolder>() {
+) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val view =

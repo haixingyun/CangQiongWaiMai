@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:background="#E0E0E0"
             android:padding="10dp"
-            tools:context=".ui.activity.OrDerDetailActivity">
+            tools:context=".ui.activity.OrderDetailActivity">
 
             <LinearLayout
                 android:id="@+id/Top"

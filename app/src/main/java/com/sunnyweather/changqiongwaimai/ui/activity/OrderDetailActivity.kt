@@ -1,5 +1,4 @@
 package com.sunnyweather.changqiongwaimai.ui.activity
-
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -12,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
+import com.hjq.toast.Toaster
 import com.sunnyweather.changqiongwaimai.data.model.OrderResultData
 import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
@@ -24,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class OrDerDetailActivity : AppCompatActivity() {
+class OrderDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrderDetailBinding
     private lateinit var OrderDetailRecycler: RecyclerView
     private lateinit var cartRepository: CartRepository
@@ -78,7 +77,7 @@ class OrDerDetailActivity : AppCompatActivity() {
                                 order.number,
                                 order.orderTime
                             )
-                            val intent = Intent(this, zhiFuDingDanActivity::class.java)
+                            val intent = Intent(this, PayActivity::class.java)
                             startActivity(intent)
                         }
                     }
@@ -90,12 +89,8 @@ class OrDerDetailActivity : AppCompatActivity() {
                             lifecycleScope.launch {
                                 orderRepository.CuiDan(orderId)
                             }
-                            MaterialDialog(this).show {
-                                title(text = "提示")
-                                message(text = "催单成功")
-                                positiveButton(text = "确定")
-                                negativeButton(text = "取消")
-                            }
+                            // 显示长 Toast
+                            Toaster.showLong("催单成功");
                         }
                     }
 
@@ -145,7 +140,7 @@ class OrDerDetailActivity : AppCompatActivity() {
                 orderRepository.ZaiLaiYiDan(orderId)  //再来一单
                 cartRepository.getCategoryDish() //查询分类数据
                 //跳转到MainActivity
-                val intent = Intent(this@OrDerDetailActivity, MainActivity::class.java)
+                val intent = Intent(this@OrderDetailActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }

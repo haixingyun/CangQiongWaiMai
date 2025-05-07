@@ -1,9 +1,8 @@
-import org.apache.tools.ant.util.JavaEnvUtils.VERSION_1_8
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    kotlin("kapt")  // 添加这个插件
+    kotlin("kapt")
 }
 
 android {
@@ -20,6 +19,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false // 开启代码混淆
@@ -31,10 +35,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-        buildFeatures {
-            viewBinding = true
-            dataBinding = true
         }
     }
     compileOptions {
@@ -62,14 +62,17 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1") // 确保有这个依赖
-    implementation("androidx.activity:activity-ktx:1.7.0") // 这个是提供 viewModels 扩展函数的库
-//    kapt("com.github.bumptech.glide:compiler:4.16.0")
-    implementation("androidx.fragment:fragment-ktx:1.5.5")  //在Fragment中使用viewModels 扩展函数
-    implementation("de.hdodenhof:circleimageview:3.1.0") //圆形图片库
-
-    kapt("com.github.bumptech.glide:compiler:4.16.0") // 如果需要使用Glide的注解处理器，启用这个依赖
-
-    implementation("com.afollestad.material-dialogs:core:3.3.0")
-
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    // 这个是提供 viewModels 扩展函数的库
+    implementation("androidx.activity:activity-ktx:1.7.0")
+    //在Fragment中使用viewModels 扩展函数
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
+    //圆形图片库
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    // ViewPager2
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    // Material Components (包含 TabLayout)
+    implementation ("com.google.android.material:material:1.4.0")
+    // 吐司框架：https://github.com/getActivity/Toaster
+    implementation("com.github.getActivity:Toaster:12.8")
 }

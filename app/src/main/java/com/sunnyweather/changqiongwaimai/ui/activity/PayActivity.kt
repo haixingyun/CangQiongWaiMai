@@ -9,14 +9,14 @@ import androidx.lifecycle.lifecycleScope
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.data.model.OrderPayment
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
-import com.sunnyweather.changqiongwaimai.databinding.ZhiFuDingDanActivityBinding
-import com.sunnyweather.changqiongwaimai.ui.fragment.tiJiaoChengGongFragment
+import com.sunnyweather.changqiongwaimai.databinding.OrderPayActivityBinding
+import com.sunnyweather.changqiongwaimai.ui.fragment.OrderSuccessFragment
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import kotlinx.coroutines.launch
 
-class zhiFuDingDanActivity : AppCompatActivity() {
+class PayActivity : AppCompatActivity() {
 
-    private lateinit var binding: ZhiFuDingDanActivityBinding
+    private lateinit var binding: OrderPayActivityBinding
     private val orderViewModel: OrderViewModel by viewModels()
     private lateinit var orderRepository: OrderRepository
     private lateinit var paymentOrder: OrderPayment  //支付请求参数
@@ -27,7 +27,7 @@ class zhiFuDingDanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         paymentOrder = OrderPayment()
-        binding = ZhiFuDingDanActivityBinding.inflate(layoutInflater)
+        binding = OrderPayActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.getWindowInsetsController(window.decorView)?.apply {
@@ -62,7 +62,7 @@ class zhiFuDingDanActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragment_container,
-                    tiJiaoChengGongFragment()
+                    OrderSuccessFragment()
                 ) // R.id.fragment_container 是 Activity 中的 FrameLayout
                 .commit()
         }

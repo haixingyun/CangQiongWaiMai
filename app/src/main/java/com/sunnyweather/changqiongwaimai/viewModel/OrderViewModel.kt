@@ -34,32 +34,42 @@ class OrderViewModel : ViewModel() {
     /**
      * 查询订单数据
      */
+    // 添加加载状态标记
+    private var isRequesting = false
+
     fun getOrders(orderStatus: String) {
+        if (isRequesting) return
+        isRequesting = true
+        
         viewModelScope.launch {
-            when (orderStatus) {
-                "全部订单" -> {
-                    // 请求全部订单数据
-                    val result = repository.getAllOrders()
-                    if (result.code == 1) _posts.value = result.data
-                }
+            try {
+                when (orderStatus) {
+                    "全部订单" -> {
+                        // 请求全部订单数据
+                        val result = repository.getAllOrders()
+                        if (result.code == 1) _posts.value = result.data
+                    }
 
-                "待付款" -> {
-                    // 请求待付款订单数据
-                    val result = repository.getPendingOrders()
-                    if (result.code == 1) _posts.value = result.data
-                }
+                    "待付款" -> {
+                        // 请求待付款订单数据
+                        val result = repository.getPendingOrders()
+                        if (result.code == 1) _posts.value = result.data
+                    }
 
-                "已取消" -> {
-                    // 请求已取消订单数据
-                    val result = repository.getCancelledOrders()
-                    if (result.code == 1) _posts.value = result.data
-                }
+                    "已取消" -> {
+                        // 请求已取消订单数据
+                        val result = repository.getCancelledOrders()
+                        if (result.code == 1) _posts.value = result.data
+                    }
 
-                else -> {
-                    // 请求全最近订单数据
-                    val result = repository.getOrders()
-                    if (result.code == 1) _posts.value = result.data
+                    else -> {
+                        // 请求全最近订单数据
+                        val result = repository.getOrders()
+                        if (result.code == 1) _posts.value = result.data
+                    }
                 }
+            } finally {
+                isRequesting = false
             }
         }
     }

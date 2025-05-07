@@ -10,10 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.databinding.FragmentCartBinding
-import com.sunnyweather.changqiongwaimai.ui.activity.tiJiaoDingDanActivity
+import com.sunnyweather.changqiongwaimai.ui.activity.SubmitOrderActivity
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 
 class FloatingCartFragment : Fragment() {
+
     // 定义回调接口
     interface OnButtonClickListener {
         fun onButtonClicked()
@@ -61,7 +62,7 @@ class FloatingCartFragment : Fragment() {
         //事件去结算按钮
         binding.cartCheckout.setOnClickListener {
             if (checkoutText == "去结算") {
-                val intent = Intent(requireContext(), tiJiaoDingDanActivity::class.java)
+                val intent = Intent(requireContext(), SubmitOrderActivity::class.java)
                 startActivity(intent)
             } else {
                 // 通过接口回调通知 Activity
@@ -84,7 +85,7 @@ class FloatingCartFragment : Fragment() {
                 val totalNumber = posts.sumOf { it.number }
                 val totalPrice = posts.sumOf { it.amount * it.number }
                 goodsNumber.text = totalNumber.toString()
-                cartTotalPrice.text = totalPrice.toString()
+                cartTotalPrice.text = "￥$totalPrice"
             }
         }
 

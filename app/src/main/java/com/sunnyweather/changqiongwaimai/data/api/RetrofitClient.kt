@@ -7,8 +7,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * 全局请求类
+ */
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.98.157:8080/user/" // 替换成你的API基地址
+    private const val BASE_URL = "http://47.105.36.245:8080/user/" // 替换成你的API基地址
 
     //添加拦截器便于调试
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -16,10 +19,15 @@ object RetrofitClient {
     }
 
     //添加请求头
-    private val headerInterceptor = Interceptor {chain ->
-        val originalRequest : Request = chain.request()
+    private val headerInterceptor = Interceptor { chain ->
+        //构建请求对象
+        val originalRequest: Request = chain.request()
+        //添加请求头
         val newRequest = originalRequest.newBuilder()
-            .addHeader("authentication","eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjEwMDAwMDE3Mzk3MTIwNzEsInVzZXJJZCI6NH0.tcq3QOhS7yEK6GtSf9XUKhQSVGD0O9fCzFrw42yeMp0")
+            .addHeader(
+                "authentication",
+                "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjEwMDAwMDE3Mzk3MTIwNzEsInVzZXJJZCI6NH0.tcq3QOhS7yEK6GtSf9XUKhQSVGD0O9fCzFrw42yeMp0"
+            )
             .build()
         chain.proceed(newRequest)
     }
@@ -28,7 +36,6 @@ object RetrofitClient {
         .addInterceptor(headerInterceptor)
         .addInterceptor(loggingInterceptor)
         .build()
-
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()

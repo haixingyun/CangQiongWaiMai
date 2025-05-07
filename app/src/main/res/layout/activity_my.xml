@@ -87,7 +87,7 @@
 
             <!-- 中间的地址管理区域 -->
             <LinearLayout
-                android:id="@+id/addressManage"
+                android:id="@+id/ll_address_go"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -130,7 +130,7 @@
                 android:background="#E0E0E0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/addressManage" />
+                app:layout_constraintTop_toBottomOf="@id/ll_address_go" />
 
             <!-- 第二个区域：历史订单 -->
             <LinearLayout

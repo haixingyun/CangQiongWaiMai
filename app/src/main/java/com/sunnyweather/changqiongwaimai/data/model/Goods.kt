@@ -13,5 +13,5 @@ data class Goods(
     val updateTime: String,
     val categoryName: String?,
     val flavors: List<Flavor>,
-    val quantity: Int = 0,
+    val quantity: Int,
 )

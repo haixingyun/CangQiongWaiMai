@@ -39,9 +39,13 @@ class MenuAdapter(
 
         // 设置点击事件
         holder.itemView.setOnClickListener {
-            // 更新选中项：先刷新旧的，再刷新新的
+
+
+            //存上一个位置
             val previousPosition = selectedPosition
-            selectedPosition = holder.adapterPosition
+            selectedPosition = holder.adapterPosition  //为选中位置赋最新的值
+
+            // 更新选中项：先刷新旧的，再刷新新的
             notifyItemChanged(previousPosition)
             notifyItemChanged(selectedPosition)
 

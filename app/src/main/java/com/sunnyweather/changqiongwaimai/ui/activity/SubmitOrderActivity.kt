@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sunnyweather.changqiongwaimai.data.model.OrderDetail
 import com.sunnyweather.changqiongwaimai.data.model.OrderEntity
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
-import com.sunnyweather.changqiongwaimai.databinding.ActivityTiJiaoDingDanBinding
+import com.sunnyweather.changqiongwaimai.databinding.OrderSubmitActivityBinding
 import com.sunnyweather.changqiongwaimai.ui.adapter.OrderDetailAdapter
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
@@ -23,8 +24,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class tiJiaoDingDanActivity : AppCompatActivity(){
-    private lateinit var binding: ActivityTiJiaoDingDanBinding
+class SubmitOrderActivity : AppCompatActivity() {
+    private lateinit var binding: OrderSubmitActivityBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val addressViewModel: AddressViewModel by viewModels()
     private lateinit var OrderDetailRecycler: RecyclerView
@@ -33,7 +34,7 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityTiJiaoDingDanBinding.inflate(layoutInflater)
+        binding = OrderSubmitActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.getWindowInsetsController(window.decorView)?.apply {
@@ -64,7 +65,7 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
             val DaBaoFei = cartData?.sumOf { it.number ?: 0 } ?: 0  //打包费
             val PeiSongFei = DaBaoFei * 2   //配送费
 
-            val totalAmount = totalPrice+DaBaoFei+PeiSongFei
+            val totalAmount = totalPrice + DaBaoFei + PeiSongFei
             val formattedPrice = String.format("%.2f", totalAmount?.toDouble())  //格式化总价为两位小数
 
             binding.JieSuan.orderTotalPrice.text = "￥$formattedPrice"  //商品详细总价
@@ -116,9 +117,13 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
                 val formatter = DateTimeFormatter.ofPattern("HH:mm") // 格式化为 时:分
                 binding.SongDaShiJian.text = now.format(formatter) // 设置文本
             }
-            if (addressDate == null){
-            binding.DiZhiBiaoTi.visibility = View.VISIBLE
-            binding.address.visibility = View.GONE
+            if (addressDate == null) {
+                binding.DiZhiBiaoTi.visibility = View.VISIBLE
+                binding.ShouHuoBiaoTi.visibility = View.GONE
+                binding.tvPeiSongPrompt.visibility = View.GONE
+                binding.address.visibility = View.GONE
+                binding.tvPeiSongPrompt2.visibility = View.GONE
+                binding.llSngDaTime.visibility = View.GONE
             }
         }
 
@@ -142,12 +147,12 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
         }
         binding.floatingCart.cartCheckout.setOnClickListener {
             OrderRepository.cachedOrder = orderEntity
-            val intent = Intent(this,zhiFuDingDanActivity::class.java)
+            val intent = Intent(this, PayActivity::class.java)
             startActivity(intent)
             finish()
         }
         binding.DiZhiBiaoTi.setOnClickListener {
-             val intent = Intent(this,AddressActivity::class.java)
+            val intent = Intent(this, AddressActivity::class.java)
             startActivity(intent)
         }
 
@@ -163,22 +168,28 @@ class tiJiaoDingDanActivity : AppCompatActivity(){
 
 
     private fun showInputDialog() {
-        val editText = EditText(this)  // 创建 EditText 输入框
-        editText.hint = "请输入内容"
+        val editText = EditText(this).apply {
+            hint = "请输入内容"
+        }
 
-        // 创建 AlertDialog
+        // 用 LinearLayout 包裹 EditText，并设置 padding
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 20, 50, 0) // 左右 50dp, 上 20dp, 下 0dp（根据需要调）
+            addView(editText)
+        }
+
         val dialog = AlertDialog.Builder(this)
-            .setTitle("请输入信息")  // 设置标题
-            .setView(editText)  // 添加输入框
+            .setTitle("提示")
+            .setView(container)
             .setPositiveButton("确定") { _, _ ->
-                val inputText = editText.text.toString()  // 获取输入的内容
+                val inputText = editText.text.toString()
                 orderEntity.remark = inputText
                 binding.content.text = inputText
             }
-            .setNegativeButton("取消", null)  // 取消按钮
+            .setNegativeButton("取消", null)
             .create()
 
-        dialog.show()  // 显示对话框
+        dialog.show()
     }
-
 }

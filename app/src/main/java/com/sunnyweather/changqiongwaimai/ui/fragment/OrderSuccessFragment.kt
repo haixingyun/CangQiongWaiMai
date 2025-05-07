@@ -7,24 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.sunnyweather.changqiongwaimai.databinding.TiJiaoChengGongFragmentBinding
+import com.sunnyweather.changqiongwaimai.databinding.OrderSubmitActivityBinding
+import com.sunnyweather.changqiongwaimai.databinding.OrderSuccessFragmentBinding
 import com.sunnyweather.changqiongwaimai.ui.activity.MainActivity
-import com.sunnyweather.changqiongwaimai.ui.activity.OrDerDetailActivity
+import com.sunnyweather.changqiongwaimai.ui.activity.OrderDetailActivity
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class tiJiaoChengGongFragment : DialogFragment() {
+class OrderSuccessFragment : DialogFragment() {
 
 
-    private lateinit var binding: TiJiaoChengGongFragmentBinding
+    private lateinit var binding: OrderSuccessFragmentBinding
     private val orderViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = TiJiaoChengGongFragmentBinding.inflate(inflater, container, false)
+        binding = OrderSuccessFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -38,7 +39,6 @@ class tiJiaoChengGongFragment : DialogFragment() {
         binding.YuJiShiJian.text = formattedTime
 
 
-
         binding.FanHuiShouYe.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
@@ -47,7 +47,7 @@ class tiJiaoChengGongFragment : DialogFragment() {
         }
 
         binding.ChaKanDingDan.setOnClickListener {
-            val intent = Intent(requireContext(), OrDerDetailActivity::class.java)
+            val intent = Intent(requireContext(), OrderDetailActivity::class.java)
             intent.putExtra("order_id", orderViewModel.orderId.value)
             startActivity(intent)
             requireActivity().finish()

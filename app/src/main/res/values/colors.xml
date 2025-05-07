@@ -16,4 +16,8 @@
     <color name="your_status_bar_color">#FFCC99</color>
     <color name="your_navigation_bar_color">#33FFFF</color>
     <color name="yellow">#FFD700</color>
+    <color name="ic_launcher_background">#FBC419</color>
+
+
+
 </resources>

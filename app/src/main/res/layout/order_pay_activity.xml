@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#E0E0E0"
-    tools:context=".ui.activity.zhiFuDingDanActivity"
+    tools:context=".ui.activity.PayActivity"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar

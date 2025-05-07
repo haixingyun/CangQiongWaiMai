@@ -24,7 +24,7 @@ class AddressViewModel : ViewModel() {
     val error = _error.value
 
     /**
-     * 监听地址数据
+     * 获取地址数据
      */
     fun JianTingDiZhi() {
         viewModelScope.launch {

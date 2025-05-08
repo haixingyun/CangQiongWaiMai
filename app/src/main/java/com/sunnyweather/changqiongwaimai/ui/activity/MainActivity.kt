@@ -7,13 +7,13 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.sunnyweather.changqiongwaimai.R
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.GlobalData
 import com.sunnyweather.changqiongwaimai.data.model.Goods
 import com.sunnyweather.changqiongwaimai.data.model.MenuItem
@@ -25,7 +25,8 @@ import com.sunnyweather.changqiongwaimai.ui.fragment.FloatingCartFragment
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.PostViewModel
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : BaseActivity() {
 
     private lateinit var menuRecyclerView: RecyclerView
     private lateinit var goodsRecyclerView: RecyclerView
@@ -65,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         //初始化Repository
         cartRepository = CartRepository()
         categoryRepository = CategoryRepository()
-
         //初始化分类集合
         addList()
         //初始化goodsRecycler
@@ -74,8 +74,9 @@ class MainActivity : AppCompatActivity() {
         // 此外，在观察 LiveData 数据变化时调用 updateGoodsList 方法来更新数据：
         postViewModel.uiList.observe(this) { list ->
             val goodsData = list
-            //判断数据是否为空
-            if (!goodsData.isNullOrEmpty()) {  //不为空
+            //判断商品数据是否不为空
+            if (!goodsData.isNullOrEmpty()) {
+                //控制组件显示与隐藏
                 loadGoodsSuccess()
                 // 当数据非 null 且不为空时更新列表
                 goodsAdapter.submitList(goodsData)
@@ -96,14 +97,6 @@ class MainActivity : AppCompatActivity() {
         }
         menuRecyclerView.adapter = menuAdapter
 
-
-        // 监听请求失败
-        postViewModel.error.observe(this) { error ->
-            error?.takeIf { it.isNotEmpty() }?.let {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         //加载购物车fragment组件
         val fragment = FloatingCartFragment()  // 你可以换成不同的文字
         supportFragmentManager.beginTransaction()
@@ -118,10 +111,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     //GoodRecyclerView 初始化
     private fun setGoodsAdapter() {
-        goodsRecyclerView.layoutManager = LinearLayoutManager(this)  //商品recycler垂直布局
+        //商品recycler垂直布局
+        goodsRecyclerView.layoutManager = LinearLayoutManager(this)
         // 创建 GoodsAdapter 实例，并传入初始数据为空的 MutableList
         goodsAdapter = GoodsAdapter(
             context = this,
@@ -129,49 +122,27 @@ class MainActivity : AppCompatActivity() {
             onAddCartClicked = { goodsId: Int, selectedSpicyLevel: String ->
                 // 当用户点击加入购物车时的逻辑处理：
                 // 例如：调用协程请求将商品添加到购物车，并刷新相关数据
-                cartViewModel.addToCart(goodsId,
-                    onSuccess = {
-                        cartViewModel.getCart()
-                    },
-                    onError = { e ->
-                        Toast.makeText(this, "添加失败: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+                cartViewModel.addToCart(
+                    goodsId,
                 )
                 // 刷新购物车数据
                 cartViewModel.getCart()
                 // 根据需要刷新商品列表数据，这里调用 fetchPosts 并传入全局的分类ID
-//                    postViewModel.fetchPosts(GlobalData.id)
             },
             onIncrease = { goods: Goods ->
-                // 同时更新 ViewModel 中保存的商品数量
-//                postViewModel.incrementQuantity(goods)
-                // 当用户点击增加商品数量时的逻辑处理：
-                cartViewModel.addToCart(goods.id,
-                    onSuccess = {
-                        cartViewModel.getCart()
-                    },
-                    onError = { e ->
-                        Toast.makeText(this, "添加失败: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
-                )
+                // 当用户点击增加商品数量时的逻辑处理
+                cartViewModel.addToCart(goods.id)
             },
             onDecrease = { goods: Goods ->
                 // 当用户点击减少商品数量时的逻辑处理：
-                cartViewModel.cartSubtractGoods(goods.id,
-                    onSuccess = {
-                        cartViewModel.getCart()
-                        Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show()
-                    },
-                    onError = { e ->
-                        Toast.makeText(this, "添加失败: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+                cartViewModel.cartSubtractGoods(
+                    goods.id,
                 )
             }
         )
-        //RecyclerView的配置
-        goodsRecyclerView.adapter = goodsAdapter // 将创建好的 GoodsAdapter 设置给 RecyclerView
+        //// 将创建好的 GoodsAdapter 设置给 RecyclerView
+        goodsRecyclerView.adapter = goodsAdapter
     }
-
 
     // 初始化菜单数据
     fun addList() {

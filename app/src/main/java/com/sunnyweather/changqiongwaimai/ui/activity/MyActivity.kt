@@ -8,11 +8,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.sunnyweather.changqiongwaimai.R
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.databinding.ActivityMyBinding
 import com.sunnyweather.changqiongwaimai.ui.fragment.RecyclerFragment
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 
-class MyActivity : AppCompatActivity() {
+/**
+ * 个人中心activity
+ */
+class MyActivity : BaseActivity() {
     private lateinit var binding: ActivityMyBinding
     private val orderViewModel: OrderViewModel by viewModels()
 
@@ -22,13 +26,11 @@ class MyActivity : AppCompatActivity() {
         binding = ActivityMyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //状态栏黄色
+        //状态栏设置为黄色
         window.statusBarColor = ContextCompat.getColor(this, R.color.yellow)
 
-        // 在 MyActivity 中加载 RecyclerFragment
-        if (savedInstanceState == null) {   //只在 Activity 首次创建 时执行（即 savedInstanceState == null 时）
-            //supportFragmentManager 是 管理 Fragment 的类，常用来 添加、替换、移除 Fragment。
-            //beginTransaction() 表示 开启一次 Fragment 事务（FragmentTransaction），允许你对 Fragment 进行一系列操作（如 replace()、add()、remove() 等）。
+        // //只在 Activity 首次创建 时执行 （即 savedInstanceState == null 时）
+        if (savedInstanceState == null) {
             // 传递参数时确认
             val fragment = RecyclerFragment.newInstance("最近订单")
             supportFragmentManager.beginTransaction()

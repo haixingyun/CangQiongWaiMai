@@ -7,11 +7,11 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hjq.toast.Toaster
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.OrderResultData
 import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class OrderDetailActivity : AppCompatActivity() {
+class OrderDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityOrderDetailBinding
     private lateinit var OrderDetailRecycler: RecyclerView
     private lateinit var cartRepository: CartRepository

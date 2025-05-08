@@ -13,6 +13,10 @@ import com.sunnyweather.changqiongwaimai.databinding.FragmentCartBinding
 import com.sunnyweather.changqiongwaimai.ui.activity.SubmitOrderActivity
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 
+/**
+ * 首页的底部购物车组件
+ * 应该可以设置为activity下的，不知道为啥做成一个fragment了
+ */
 class FloatingCartFragment : Fragment() {
 
     // 定义回调接口

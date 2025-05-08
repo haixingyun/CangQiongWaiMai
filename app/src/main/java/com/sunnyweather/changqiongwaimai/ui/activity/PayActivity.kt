@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.sunnyweather.changqiongwaimai.R
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.OrderPayment
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
 import com.sunnyweather.changqiongwaimai.databinding.OrderPayActivityBinding
@@ -14,12 +15,18 @@ import com.sunnyweather.changqiongwaimai.ui.fragment.OrderSuccessFragment
 import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import kotlinx.coroutines.launch
 
-class PayActivity : AppCompatActivity() {
+
+/**
+ * 用户支付Activity
+ */
+class PayActivity : BaseActivity() {
 
     private lateinit var binding: OrderPayActivityBinding
     private val orderViewModel: OrderViewModel by viewModels()
     private lateinit var orderRepository: OrderRepository
-    private lateinit var paymentOrder: OrderPayment  //支付请求参数
+
+    //支付请求参数
+    private lateinit var paymentOrder: OrderPayment
 
     // 将计时器声明在类级别，供 onDestroy() 中访问
     private var countDownTimer: CountDownTimer? = null
@@ -30,6 +37,7 @@ class PayActivity : AppCompatActivity() {
         binding = OrderPayActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //设置状态栏颜色
         ViewCompat.getWindowInsetsController(window.decorView)?.apply {
             isAppearanceLightStatusBars = true // 文字黑色
         }
@@ -45,13 +53,17 @@ class PayActivity : AppCompatActivity() {
                 orderViewModel.orderId.value = orderDetail.id
             }
         }
+
+        //如果微信支付是选中状态，为参数赋值1
         if (binding.DanXuanKuang.isChecked) {
             paymentOrder.payMethod = 1
         } else {
             paymentOrder.payMethod = 2
         }
+
         //开启倒计时
         startCountDown()
+
         //事件：确认支付
         binding.QueREnZhiFu.setOnClickListener {
             //请求 订单支付
@@ -68,6 +80,9 @@ class PayActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 开启倒计时
+     */
     private fun startCountDown() {
         // 10 分钟 = 10 * 60 * 1000 毫秒
         val totalTime = 10 * 60 * 1000L
@@ -87,6 +102,7 @@ class PayActivity : AppCompatActivity() {
                 binding.time.text = "订单已超时"
             }
         }
+
         // 启动计时器
         countDownTimer?.start()
     }

@@ -10,15 +10,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.sunnyweather.changqiongwaimai.ui.fragment.AddressPickerBottomSheet
 import com.sunnyweather.changqiongwaimai.R
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.Address
 import com.sunnyweather.changqiongwaimai.data.repository.AddressRepository
 import com.sunnyweather.changqiongwaimai.databinding.ActivityEditAddressBinding
+import com.sunnyweather.changqiongwaimai.ui.fragment.AddressPickerBottomSheetDialog
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import kotlinx.coroutines.launch
 
-class EditAddressActivity : AppCompatActivity() {
+class EditAddressActivity : BaseActivity() {
     private lateinit var binding: ActivityEditAddressBinding
     private val addressViewModel: AddressViewModel by viewModels()
     private lateinit var addressRepository: AddressRepository
@@ -217,7 +218,7 @@ class EditAddressActivity : AppCompatActivity() {
         }
         //事件：点击选择地址
         binding.DiZhi.setOnClickListener {
-            AddressPickerBottomSheet(this) { selected ->
+            AddressPickerBottomSheetDialog(this) { selected ->
                 binding.address.text = selected
             }.show()
         }

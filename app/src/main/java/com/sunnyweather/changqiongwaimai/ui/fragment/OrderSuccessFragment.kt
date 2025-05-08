@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import com.sunnyweather.changqiongwaimai.databinding.OrderSubmitActivityBinding
 import com.sunnyweather.changqiongwaimai.databinding.OrderSuccessFragmentBinding
 import com.sunnyweather.changqiongwaimai.ui.activity.MainActivity
 import com.sunnyweather.changqiongwaimai.ui.activity.OrderDetailActivity
@@ -15,8 +14,10 @@ import com.sunnyweather.changqiongwaimai.viewModel.OrderViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+/**
+ * 下单成功fragment
+ */
 class OrderSuccessFragment : DialogFragment() {
-
 
     private lateinit var binding: OrderSuccessFragmentBinding
     private val orderViewModel: OrderViewModel by activityViewModels()
@@ -55,7 +56,6 @@ class OrderSuccessFragment : DialogFragment() {
         }
     }
 
-
     //全屏
     override fun onStart() {
         super.onStart()
@@ -67,5 +67,4 @@ class OrderSuccessFragment : DialogFragment() {
             setBackgroundDrawableResource(android.R.color.transparent)  // 透明背景，避免有圆角
         }
     }
-
 }

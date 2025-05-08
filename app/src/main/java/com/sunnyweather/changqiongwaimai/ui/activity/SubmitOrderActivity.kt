@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.OrderDetail
 import com.sunnyweather.changqiongwaimai.data.model.OrderEntity
 import com.sunnyweather.changqiongwaimai.data.repository.OrderRepository
@@ -24,7 +25,10 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class SubmitOrderActivity : AppCompatActivity() {
+/**
+ * 提交订单时的Activity
+ */
+class SubmitOrderActivity : BaseActivity() {
     private lateinit var binding: OrderSubmitActivityBinding
     private val cartViewModel: CartViewModel by viewModels()
     private val addressViewModel: AddressViewModel by viewModels()

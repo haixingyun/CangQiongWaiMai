@@ -22,6 +22,9 @@ import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.PostViewModel
 import kotlinx.coroutines.launch
 
+/**
+ * 点击购物车底部弹出框
+ */
 class CartBottomSheetFragment(
 ) : BottomSheetDialogFragment() {
 
@@ -76,34 +79,11 @@ class CartBottomSheetFragment(
                     requireContext(), posts,
                     //添加按钮回调
                     onIncrease = { goodsId ->
-                        lifecycleScope.launch {
-                            //新增商品请求
-                            val cartSubtractGoods = cartRepository.addToCart(Flavor(goodsId, null))
-                            if (cartSubtractGoods) {
-                                //重新查询购物车
-                                cartViewModel.getCart()
-                                //重新查询分类商品
-                                postViewModel.fetchPosts(GlobalData.id)
-                            } else {
-                                Log.e("CartNetwork", "购物车增加商品失败$")
-                            }
-                        }
+                        cartViewModel.addToCart(goodsId)
                     },
                     //减少按钮回调
                     onDecrease = { goodsId ->
-                        lifecycleScope.launch {
-                            // 购物车减少商品请求
-                            val response = cartRepository.cartSubtractGoods(Flavor(goodsId, null))
-                            if (response.code == 1) {
-                                Log.d("CartNetwork", "根据商品id:${goodsId}减少商品成功")
-                                //重新查询购物车
-                                cartViewModel.getCart()
-                                //重新查询分类商品
-                                postViewModel.fetchPosts(GlobalData.id)
-                            } else {
-                                Log.e("CartNetwork", "购物车减少商品id:${goodsId}失败$")
-                            }
-                        }
+                        cartViewModel.cartSubtractGoods(goodsId)
                     }
                 )
             }

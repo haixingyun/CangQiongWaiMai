@@ -7,9 +7,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sunnyweather.changqiongwaimai.R
-import com.sunnyweather.changqiongwaimai.utils.ViewPagerAdapter
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
+import com.sunnyweather.changqiongwaimai.ui.adapter.ViewPagerAdapter
 
-class HistoryOrderActivity : AppCompatActivity() {
+class HistoryOrderActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

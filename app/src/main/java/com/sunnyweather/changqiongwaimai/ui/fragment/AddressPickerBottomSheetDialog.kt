@@ -12,7 +12,10 @@ import com.sunnyweather.changqiongwaimai.data.model.City
 import com.sunnyweather.changqiongwaimai.data.model.Province
 import com.sunnyweather.changqiongwaimai.ui.adapter.AddressAdapter
 
-class AddressPickerBottomSheet(
+/**
+ * 地址底部弹出框
+ */
+class AddressPickerBottomSheetDialog(
     private val context: Context,
     private val onSelected: (String) -> Unit
 ) : BottomSheetDialog(context) {

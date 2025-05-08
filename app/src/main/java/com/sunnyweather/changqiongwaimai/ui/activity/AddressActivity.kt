@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sunnyweather.changqiongwaimai.R
+import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.AddressRequest
 import com.sunnyweather.changqiongwaimai.data.repository.AddressRepository
 import com.sunnyweather.changqiongwaimai.databinding.ActivityAddressBinding
@@ -17,7 +18,7 @@ import com.sunnyweather.changqiongwaimai.ui.adapter.AddressAdapterss
 import com.sunnyweather.changqiongwaimai.viewModel.AddressViewModel
 import kotlinx.coroutines.launch
 
-class AddressActivity : AppCompatActivity() {
+class AddressActivity : BaseActivity() {
     private lateinit var binding: ActivityAddressBinding
     private lateinit var addressRepository: AddressRepository
     private lateinit var addressAdapter: AddressAdapterss
@@ -40,7 +41,7 @@ class AddressActivity : AppCompatActivity() {
         addressRepository = AddressRepository()
 
         //初始化适配器
-        setupRecyclerView()
+        initAddressRecyclerView()
 
         //订阅addressViewModel
         addressViewModel.address.observe(this) { result ->
@@ -63,9 +64,9 @@ class AddressActivity : AppCompatActivity() {
     }
 
     /**
-     * RecyclerView的设置
+     * RecyclerView的初始化
      */
-    private fun setupRecyclerView() {
+    private fun initAddressRecyclerView() {
         //为Recycle设置方向  默认是垂直方向
         binding.addressRecyclerView.layoutManager = LinearLayoutManager(this)
         //水平方向

@@ -13,7 +13,7 @@ import com.sunnyweather.changqiongwaimai.data.model.OrderDetail
 
 class OrderAdapter(
     private val content: Context,
-    private val orders: List<Order>,
+    private var orders: List<Order>,
     private val zaiLaiYiDan: (Int) -> Unit,
     private val orderDetail: (Int) -> Unit, // 这里是传递回调函数
     private val CuiDan: (Int) -> Unit,  //催单按钮回调
@@ -88,5 +88,13 @@ class OrderAdapter(
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             orderGoodRecyclerView.adapter = DishsAdapter
         }
+    }
+
+    /**
+     * 刷新数据
+     */
+    fun submitList(newList: List<Order>) {
+        orders = newList
+        notifyDataSetChanged()
     }
 }

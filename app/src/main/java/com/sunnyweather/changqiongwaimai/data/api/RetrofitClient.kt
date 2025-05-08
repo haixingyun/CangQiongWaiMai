@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  * 全局请求类
  */
 object RetrofitClient {
-    private const val BASE_URL = "http://47.105.36.245:8080/user/" // 替换成你的API基地址
+    private const val BASE_URL = "http://47.105.36.245:8080/user/" // API基地址
 
     //添加拦截器便于调试
     private val loggingInterceptor = HttpLoggingInterceptor().apply {

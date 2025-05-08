@@ -1,4 +1,4 @@
-package com.sunnyweather.changqiongwaimai.utils
+package com.sunnyweather.changqiongwaimai.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -18,4 +18,5 @@ class ViewPagerAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
         // 根据位置创建对应状态的 Fragment 实例
         return RecyclerFragment.newInstance(statusTypes[position])
     }
+    
 }

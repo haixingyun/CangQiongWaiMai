@@ -2,15 +2,15 @@ package com.sunnyweather.changqiongwaimai.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.sunnyweather.changqiongwaimai.base.BaseViewModel
 import com.sunnyweather.changqiongwaimai.data.model.Dish
 import com.sunnyweather.changqiongwaimai.data.model.Flavor
 import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
-import kotlinx.coroutines.launch
 
-class CartViewModel : ViewModel() {
-    private val repository = CartRepository()  // 依赖 Repository
+class CartViewModel : BaseViewModel() {
+
+    //购物车 Repository
+    private val repository = CartRepository()
 
     // 原本用于展示 Cart 列表的数据
     private val _posts = MutableLiveData<List<Dish>>()
@@ -23,60 +23,35 @@ class CartViewModel : ViewModel() {
 
     /** 查询购物车 */
     fun getCart() {
-        viewModelScope.launch {
-            val response = repository.getCart()
-            if (response.code == 1) {
-                // 更新列表和数量映射
-                _posts.postValue(response.data!!)
-                _cartMap.postValue(
-                    response.data.associate { it.dishId to it.number }
-                )
-            }
-        }
+        request(request = { repository.getCart() }, onSuccess = { data ->
+            _posts.postValue(data!!)
+            _cartMap.postValue(data.associate { it.dishId to it.number })
+        })
+
     }
 
-    /** 添加到购物车 */
+    /**
+     * 将商品添加到购物车
+     * @param goodsId 商品id
+     */
     fun addToCart(
-        goodsId: Int,
-        onSuccess: () -> Unit = {},
-        onError: (Throwable) -> Unit = {}
+        goodsId: Int
     ) {
-        viewModelScope.launch {
-            try {
-                repository.addToCart(Flavor(goodsId))
-                // 同步更新本地的数量映射
-                val current = _cartMap.value.orEmpty().toMutableMap()
-                current[goodsId] = (current[goodsId] ?: 0) + 1
-                _cartMap.postValue(current)
-                onSuccess()
-            } catch (e: Exception) {
-                onError(e)
-            }
-        }
+        request(
+            request = { repository.addToCart(Flavor(goodsId)) },
+            onSuccess = { _ -> getCart() }
+        )
     }
 
-    /** 从购物车减少 */
+    /**
+     *  商品取消购物车
+     *  @param goodsId 商品id
+     */
     fun cartSubtractGoods(
-        goodsId: Int,
-        onSuccess: () -> Unit = {},
-        onError: (Throwable) -> Unit = {}
+        goodsId: Int
     ) {
-        viewModelScope.launch {
-            try {
-                repository.cartSubtractGoods(Flavor(goodsId))
-                onSuccess()
-                // 同步更新本地的数量映射
-                val current = _cartMap.value.orEmpty().toMutableMap()
-                val newCount = (current[goodsId] ?: 0) - 1
-                if (newCount > 0) {
-                    current[goodsId] = newCount
-                } else {
-                    current.remove(goodsId)
-                }
-                _cartMap.postValue(current)
-            } catch (e: Exception) {
-                onError(e)
-            }
-        }
+        request(
+            request = { repository.cartSubtractGoods(Flavor(goodsId)) }
+        )
     }
 }

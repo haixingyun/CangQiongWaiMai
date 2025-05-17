@@ -99,7 +99,6 @@ class RecyclerFragment : Fragment() {
                 lifecycleScope.launch {
                     cartRepository.emptyCart()   //清空购物车
                     orderRepository.ZaiLaiYiDan(orderId)  //再来一单
-                    cartRepository.getCategoryDish() //查询分类数据
                     //在 Android 中要销毁当前 Fragment 和所在 Activity 并返回上一个 Activity
                     requireActivity().finish()
                 }

@@ -138,7 +138,6 @@ class OrderDetailActivity : BaseActivity() {
             lifecycleScope.launch {
                 cartRepository.emptyCart()   //清空购物车
                 orderRepository.ZaiLaiYiDan(orderId)  //再来一单
-                cartRepository.getCategoryDish() //查询分类数据
                 //跳转到MainActivity
                 val intent = Intent(this@OrderDetailActivity, MainActivity::class.java)
                 startActivity(intent)

@@ -2,7 +2,6 @@ package com.sunnyweather.changqiongwaimai.data.api
 
 import com.sunnyweather.changqiongwaimai.data.model.Address
 import com.sunnyweather.changqiongwaimai.data.model.AddressRequest
-import com.sunnyweather.changqiongwaimai.data.model.CategoryDish
 import com.sunnyweather.changqiongwaimai.data.model.Dish
 import com.sunnyweather.changqiongwaimai.data.model.Flavor
 import com.sunnyweather.changqiongwaimai.data.model.Goods
@@ -57,12 +56,6 @@ interface ApiService {
      */
     @GET("order/historyOrders?pageSize=10&page=1")
     suspend fun getOrders(): ResponseData<Orders>
-
-    /**
-     * 分类条件查询
-     */
-    @GET("category/list")
-    suspend fun getCategory(): ResponseData<CategoryDish>
 
     /**
      * 再来一单

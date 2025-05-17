@@ -14,6 +14,11 @@
 Kotlin、Glide、Retrofit、OkHttp、ViewPager2、Gson等..
 
 
+**项目体验**
+
+[蓝奏云下载地址](https://wwlq.lanzoub.com/idrBI2wisupg) (密码: 8o3g)
+
+
 **项目截图**
 
 <table>

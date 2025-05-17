@@ -248,7 +248,6 @@
             tools:listitem="@layout/item_menu" />
 
         <!-- 右侧商品列表 -->
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/goodsRecyclerView"
             android:layout_width="match_parent"

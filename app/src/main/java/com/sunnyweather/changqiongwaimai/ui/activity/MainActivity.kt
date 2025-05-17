@@ -6,26 +6,28 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import com.hjq.toast.Toaster
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.base.BaseActivity
 import com.sunnyweather.changqiongwaimai.data.model.GlobalData
 import com.sunnyweather.changqiongwaimai.data.model.Goods
 import com.sunnyweather.changqiongwaimai.data.model.MenuItem
-import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 import com.sunnyweather.changqiongwaimai.data.repository.CategoryRepository
 import com.sunnyweather.changqiongwaimai.ui.adapter.GoodsAdapter
 import com.sunnyweather.changqiongwaimai.ui.adapter.MenuAdapter
 import com.sunnyweather.changqiongwaimai.ui.fragment.FloatingCartFragment
+import com.sunnyweather.changqiongwaimai.utils.PostViewModelFactory
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.PostViewModel
 
-
+/**
+ * 程序主页面
+ */
 class MainActivity : BaseActivity() {
 
     private lateinit var menuRecyclerView: RecyclerView
@@ -34,14 +36,22 @@ class MainActivity : BaseActivity() {
 
     private lateinit var progressBar: ProgressBar
     private lateinit var tvNoDish: TextView
+    private var lastBackTime = 0L
 
-    private val postViewModel: PostViewModel by viewModels()
+
     private val cartViewModel: CartViewModel by viewModels()
-    private lateinit var cartRepository: CartRepository
+    private val postViewModel: PostViewModel by viewModels {
+        PostViewModelFactory(
+            cartViewModel,
+            categoryRepository
+        )
+    }
 
     // 声明全局变量保存 GoodsAdapter 实例
     private lateinit var goodsAdapter: GoodsAdapter
     private lateinit var menuAdapter: MenuAdapter
+
+    //分类标题集合
     private val menuList = ArrayList<MenuItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +66,9 @@ class MainActivity : BaseActivity() {
         //设置状态栏背景为白色
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
+        // 一定要先请求购物车数据
+        cartViewModel.getCart()
+
         //获取控件
         menuRecyclerView = findViewById(R.id.menuRecyclerView)      //分类recyclerview
         goodsRecyclerView = findViewById(R.id.goodsRecyclerView)    //商品recyclerview
@@ -64,7 +77,6 @@ class MainActivity : BaseActivity() {
         tvNoDish = findViewById(R.id.tv_no_dish)
 
         //初始化Repository
-        cartRepository = CartRepository()
         categoryRepository = CategoryRepository()
         //初始化分类集合
         addList()
@@ -184,6 +196,20 @@ class MainActivity : BaseActivity() {
         progressBar.visibility = View.GONE
         tvNoDish.visibility = View.GONE
         goodsRecyclerView.visibility = View.VISIBLE
+    }
+
+    /**
+     * 返回键回调
+     */
+    override fun onBackPressed() {
+        val currentTime = System.currentTimeMillis()
+
+        if (currentTime - lastBackTime < 2000) {
+            super.onBackPressed()
+        } else {
+            Toaster.show("再按一次退出应用")
+            lastBackTime = currentTime
+        }
     }
 }
 

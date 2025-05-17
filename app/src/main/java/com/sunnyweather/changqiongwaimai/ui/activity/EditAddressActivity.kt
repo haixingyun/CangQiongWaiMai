@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.sunnyweather.changqiongwaimai.R
 import com.sunnyweather.changqiongwaimai.base.BaseActivity

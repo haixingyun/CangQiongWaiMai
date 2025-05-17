@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sunnyweather.changqiongwaimai.R
-import com.sunnyweather.changqiongwaimai.data.model.Flavor
 import com.sunnyweather.changqiongwaimai.data.model.GlobalData
 import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 import com.sunnyweather.changqiongwaimai.databinding.FragmentCartBottomSheetBinding
 import com.sunnyweather.changqiongwaimai.ui.adapter.CartAdapter
+import com.sunnyweather.changqiongwaimai.utils.PostViewModelFactory
 import com.sunnyweather.changqiongwaimai.viewModel.CartViewModel
 import com.sunnyweather.changqiongwaimai.viewModel.PostViewModel
 import kotlinx.coroutines.launch
@@ -31,7 +31,11 @@ class CartBottomSheetFragment(
     private lateinit var binding: FragmentCartBottomSheetBinding    // 绑定视图
     private lateinit var goodsRecyclerView: RecyclerView
     private lateinit var cartRepository: CartRepository
-    private val postViewModel: PostViewModel by viewModels()
+    private val postViewModel: PostViewModel by viewModels {
+        PostViewModelFactory(
+            cartViewModel
+        )
+    }
     // 修改 Fragment 中的 ViewModel 声明
     private val cartViewModel: CartViewModel by activityViewModels()
 

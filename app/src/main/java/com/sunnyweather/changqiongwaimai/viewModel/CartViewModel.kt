@@ -1,5 +1,6 @@
 package com.sunnyweather.changqiongwaimai.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sunnyweather.changqiongwaimai.base.BaseViewModel
@@ -25,7 +26,8 @@ class CartViewModel : BaseViewModel() {
     fun getCart() {
         request(request = { repository.getCart() }, onSuccess = { data ->
             _posts.postValue(data!!)
-            _cartMap.postValue(data.associate { it.dishId to it.number })
+            _cartMap.value =data.associate { it.dishId to it.number }
+            Log.d("ViewModel", "_cartMap.value = ${_cartMap.value}")  // 这里肯定能马上看到
         })
 
     }
@@ -51,7 +53,8 @@ class CartViewModel : BaseViewModel() {
         goodsId: Int
     ) {
         request(
-            request = { repository.cartSubtractGoods(Flavor(goodsId)) }
+            request = { repository.cartSubtractGoods(Flavor(goodsId)) },
+            onSuccess = { _ -> getCart() }
         )
     }
 }

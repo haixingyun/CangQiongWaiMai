@@ -1,5 +1,8 @@
 package com.sunnyweather.changqiongwaimai.data.model
 
+/**
+ * 商品model
+ */
 data class Goods(
     val id: Int,
     val name: String,
@@ -7,11 +10,9 @@ data class Goods(
     val price: Double,
     val image: String,
     val description: String,
-    val number: Int,
     val status: Int,
     val amount: Int,
     val updateTime: String,
-    val categoryName: String?,
     val flavors: List<Flavor>,
     val quantity: Int,
 )

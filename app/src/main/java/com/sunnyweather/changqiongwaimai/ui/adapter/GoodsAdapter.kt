@@ -60,6 +60,7 @@ class GoodsAdapter(
         //加载图片
         Glide.with(context)
             .load(goods.image)
+            .error(R.drawable.loding_err)
             .into(holder.goodsImageView)
 
         // 设置 选择规格 点击事件，点击后弹出自定义选择规格BottomSheetDialog

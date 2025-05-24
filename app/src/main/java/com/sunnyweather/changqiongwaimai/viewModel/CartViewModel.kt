@@ -10,26 +10,21 @@ import com.sunnyweather.changqiongwaimai.data.repository.CartRepository
 
 class CartViewModel : BaseViewModel() {
 
-    //购物车 Repository
-    private val repository = CartRepository()
+    private val repository = CartRepository()      //购物车 Repository
 
-    // 原本用于展示 Cart 列表的数据
-    private val _posts = MutableLiveData<List<Dish>>()
+    private val _posts = MutableLiveData<List<Dish>>()      // 原本用于展示 Cart 列表的数据
     val posts: LiveData<List<Dish>> = _posts
 
-    // ▼—— 全部 LiveData ——▼
-    // 用一个 MutableLiveData 来保存：Map<商品Id, 数量>
-    private val _cartMap = MutableLiveData<Map<Int, Int>>(emptyMap())
+    private val _cartMap = MutableLiveData<Map<Int, Int>>(emptyMap())    // 用一个 MutableLiveData 来保存：Map<商品Id, 数量>
     val cartMap: LiveData<Map<Int, Int>> = _cartMap
 
     /** 查询购物车 */
     fun getCart() {
         request(request = { repository.getCart() }, onSuccess = { data ->
             _posts.postValue(data!!)
-            _cartMap.value =data.associate { it.dishId to it.number }
+            _cartMap.value =data.associate { it.dishId to it.number }  //associate：扩展函数，常用于将集合转换为 Map 类型。
             Log.d("ViewModel", "_cartMap.value = ${_cartMap.value}")  // 这里肯定能马上看到
         })
-
     }
 
     /**

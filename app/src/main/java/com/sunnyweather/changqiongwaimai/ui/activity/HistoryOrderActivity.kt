@@ -2,7 +2,6 @@ package com.sunnyweather.changqiongwaimai.ui.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,7 +20,8 @@ class HistoryOrderActivity : BaseActivity() {
 
         val adapter = ViewPagerAdapter(this)
         viewPager.adapter = adapter
-        // 关联TabLayout
+
+        //TabLayout与viewPager关联
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "全部订单"

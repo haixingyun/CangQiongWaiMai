@@ -13,11 +13,10 @@ class PostViewModel(
     private val categoryRepository: CategoryRepository
 ) : BaseViewModel() {
 
-
-    // 1. 原始商品列表，MutableLiveData
+    // 商品列表
     private val _rawGoods = MutableLiveData<List<Goods>>(emptyList())
 
-    // 直接使用注入的 cartViewModel 的 cartMap
+    // map集合存储的商品id和商品数量
     private val cartMapLiveData: LiveData<Map<Int, Int>> = cartViewModel.cartMap
 
     // 3. 用 MediatorLiveData 来合并两路 LiveData，生成 UI 层要用的列表
@@ -33,8 +32,8 @@ class PostViewModel(
             }
         }
 
-        addSource(_rawGoods) { update() }
-        addSource(cartMapLiveData) { update() }
+        addSource(_rawGoods) { update() }   //观察_rawGoods
+        addSource(cartMapLiveData) { update() }  //观察cartMapLiveData
     }
 
     /**

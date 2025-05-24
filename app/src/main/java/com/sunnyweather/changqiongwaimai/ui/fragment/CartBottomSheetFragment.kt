@@ -52,10 +52,13 @@ class CartBottomSheetFragment(
         super.onViewCreated(view, savedInstanceState)
         goodsRecyclerView = view.findViewById(R.id.recyclerView)
 
+        //获取购物车数据
         cartViewModel.getCart()
 
+        //设置recyclerView方向
         goodsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        //清空按钮
         val goodsEmpty: LinearLayout = binding.qingKong
 
         //点击清空事件

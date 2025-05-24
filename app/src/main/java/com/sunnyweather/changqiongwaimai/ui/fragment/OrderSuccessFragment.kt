@@ -42,6 +42,7 @@ class OrderSuccessFragment : DialogFragment() {
 
         binding.FanHuiShouYe.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)   //栈内唯一模式
             startActivity(intent)
             requireActivity().finish() // 销毁宿主 activity
             dismiss()

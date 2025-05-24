@@ -21,19 +21,16 @@ android {
 
     buildFeatures {
         viewBinding = true
-        dataBinding = true
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false // 开启代码混淆
+            isMinifyEnabled = true    // 开启混淆和压缩
+            isShrinkResources = true  // 移除无用资源
+            //这段代码是用于配置 ProGuard / R8 混淆规则文件，目的是在构建 APK 的 Release 版本时进行：
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), //这是 Google 提供的默认混淆规则文件
+                "proguard-rules.pro"     //这是你自己写的自定义混淆规则文件
             )
         }
     }
